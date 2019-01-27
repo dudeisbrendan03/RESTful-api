@@ -20,7 +20,8 @@ const http          = require('http');
 const url           = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 
-//Respond to requests with a string
+//Respond to requests with a string and get all the content and data from the request
+//HTTP Server
 var server = http.createServer(function(req,res) {
     //Parse the req
     var reqUrl = url.parse(req.url,true);//Get the URL the user used and parse it.
@@ -50,13 +51,33 @@ var server = http.createServer(function(req,res) {
     req.on('end',function(){//The request has finished - if there is no payload this will still be called
         buffer += decoder.end();//The request has finished, finish up
 
+        //Send the request to the correct handler, if non is available/found send to ohnoes
+        var handlerReq  =   typeof(router[trimPath]) !== 'na' ? router[trimPath] : handlers.ohnoes
+
+        //Construct the object to send to the handler
+        var data {
+            'trimPath'  :   trimPath,
+            'queryStringObj'  :   queryStringObj,
+            'method'  :   method,
+            'headers'  :   headers,
+            'payload'  :   buffer
+        };
+
+        //Now send the req to the handler specified in the router
+        handlerReq(data,function(statCode,payload) {
+            //Use the status code from the handler, or just use 200 (OK)
+            statCode    = typeof(statCode) == 'number' ? statCode : 200;
+            
+            //Use the payload from the handler or return empty obj.
+        });
+
         //Now the request has finished we want to go back to what we were doing before
         
         //Respond to the req
-        res.end('Avaliable.\n');
+        res.end('Available.\n');
 
         //Log the req path
-        console.log('\n'+request+`[r] Requested recieved:\n  On path: '${trimPath}'\n  Using method: ${method.toUpperCase()}\n  With query: ${JSON.stringify(queryStringObj)}\n  The headers:\n    ${JSON.stringify(headers)}\n  Paylod: ${String(buffer)}`,none)
+        console.log('\n'+request+`[r] Requested recieved:\n  On path: '${trimPath}'\n  Using method: ${method.toUpperCase()}\n  With query: ${JSON.stringify(queryStringObj)}\n  The headers:\n    ${JSON.stringify(headers)}\n  Payload: ${String(buffer)}`,none)
 
     });
 });
@@ -65,3 +86,32 @@ var server = http.createServer(function(req,res) {
 server.listen(9876,function(){
     console.log(success+'[s] Server is listening on ',col.inverse,'9876',none)
 })
+
+
+
+
+/*
+Handlers
+_______________
+Sample - A demo handler
+ohnoes - A 404 handler
+*/
+var handlers = {
+
+};
+
+//Sample handler
+handlers.sample = function(data,callback) {
+    //Callback a 200 status code and a payload object for the demo
+    callback(200,{'mar':'cute'})
+};
+
+//Handler not found
+handlers.ohnoes = function(data,callback) {
+    callback(404)
+};
+
+//A cool router
+var router = {
+    "sample" : handlers.sample
+};
