@@ -75,12 +75,21 @@ var server = http.createServer(function(req,res) {
             statCode    = typeof(statCode) == 'number' ? statCode : 200;
             
             //Use the payload from the handler or return empty obj.
-            payload = typeof(payload) == 'object' ? payload : {};
-
-            //Convert the payload to a string to send back to the user
-            var payloadStr  = JSON.stringify(payload);
+            //NOTE about the shitty if/else filters: they're a secret
+            if (trimPath == 'best') {
+                var payloadStr  = payload
+            } else {
+                payload = typeof(payload) == 'object' ? payload : {};
+                //Convert the payload to a string to send back to the user
+                var payloadStr  = JSON.stringify(payload);
+            };            
 
             //Respond to the req
+            if (trimPath == 'best') {
+                res.setHeader('Content-Type','application/HTML')
+            }   else {
+                res.setHeader('Content-Type','application/JSON')
+            };
             res.writeHead(statCode);
             res.end(payloadStr);
     
@@ -115,9 +124,12 @@ var handlers = {};
 //Sample handler
 handlers.sample = function(data,callback) {
     //Callback a 200 status code and a payload object for the demo
-    callback(200,{'mar':'cute'});
+    callback(200,{'mar':'TheBestHuman'});
 };
 
+handlers.best = function(data,callback) {
+    callback(200,"<head><link href='https://fonts.googleapis.com/css?family=Major+Mono+Display' rel='stylesheet'></head><body><style>body, html, h1 {font-family: 'Major Mono Display', monospace;}; h3{font-family: 'Major Mono Display', monospace; font-size: 24px}</style><h1>Mar is a cutie</h1><h3>❤</h3></body")
+}
 //Handler not found
 handlers.ohnoes = function(data,callback) {
     callback(404);
@@ -125,5 +137,6 @@ handlers.ohnoes = function(data,callback) {
 
 //A cool router
 var router = {
-    "sample" : handlers.sample
+    "sample" : handlers.sample,
+    "best" : handlers.best
 };
