@@ -19,6 +19,8 @@ console.info(info+'[i] Calling in the troops (requiring dependencies)',none)
 const http          = require('http');
 const url           = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
+const config        = require('./config');
+console.info('\nNJSAPIPROJ-V1-'+config.env+'\n')
 
 //Date/time
 var date = new Date();
@@ -107,8 +109,8 @@ var server = http.createServer(function(req,res) {
 });
 
 //Start the server
-server.listen(9876,function(){
-    console.log(success+'[s] Server is listening on ',col.inverse,'9876',none)
+server.listen(config.port,function(){
+    console.log(success+'[s] Server is listening on ',col.inverse,config.port,none)
 })
 
 
@@ -124,7 +126,7 @@ var handlers = {};
 //Sample handler
 handlers.sample = function(data,callback) {
     //Callback a 200 status code and a payload object for the demo
-    callback(200,{'mar':'TheBestHuman'});
+    callback(200,{'sample':'json'});
 };
 
 handlers.best = function(data,callback) {
