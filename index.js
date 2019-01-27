@@ -20,6 +20,11 @@ const http          = require('http');
 const url           = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 
+//Date/time
+var date = new Date();
+var current_hour = date.getHours();
+rdate = date+current_hour
+
 //Respond to requests with a string and get all the content and data from the request
 //HTTP Server
 var server = http.createServer(function(req,res) {
@@ -52,10 +57,10 @@ var server = http.createServer(function(req,res) {
         buffer += decoder.end();//The request has finished, finish up
 
         //Send the request to the correct handler, if non is available/found send to ohnoes
-        var handlerReq  =   typeof(router[trimPath]) !== 'na' ? router[trimPath] : handlers.ohnoes
+        var handlerReq  =   typeof(router[trimPath]) !== 'undefined' ? router[trimPath] : handlers.ohnoes;//if stat code is number, leave it as it is and if it isnt a number then define stat code as 200
 
         //Construct the object to send to the handler
-        var data {
+        var data = {
             'trimPath'  :   trimPath,
             'queryStringObj'  :   queryStringObj,
             'method'  :   method,
@@ -63,21 +68,31 @@ var server = http.createServer(function(req,res) {
             'payload'  :   buffer
         };
 
+
         //Now send the req to the handler specified in the router
         handlerReq(data,function(statCode,payload) {
             //Use the status code from the handler, or just use 200 (OK)
             statCode    = typeof(statCode) == 'number' ? statCode : 200;
             
             //Use the payload from the handler or return empty obj.
+            payload = typeof(payload) == 'object' ? payload : {};
+
+            //Convert the payload to a string to send back to the user
+            var payloadStr  = JSON.stringify(payload);
+
+            //Respond to the req
+            res.writeHead(statCode);
+            res.end(payloadStr);
+    
+            //Logthatshit
+            console.info('\n'+request+`[r] Request responded to:\n  Returning w/ code: ${String(statCode)}\n  With payload: ${String(payloadStr)}\n  At time: ${rdate}`)
         });
 
         //Now the request has finished we want to go back to what we were doing before
         
-        //Respond to the req
-        res.end('Available.\n');
 
         //Log the req path
-        console.log('\n'+request+`[r] Requested recieved:\n  On path: '${trimPath}'\n  Using method: ${method.toUpperCase()}\n  With query: ${JSON.stringify(queryStringObj)}\n  The headers:\n    ${JSON.stringify(headers)}\n  Payload: ${String(buffer)}`,none)
+        console.log('\n'+request+`[r] Requested recieved:\n  On path: '${trimPath}'\n  Using method: ${method.toUpperCase()}\n  With query: ${JSON.stringify(queryStringObj)}\n  The headers:\n    ${JSON.stringify(headers)}\n  Payload: ${String(buffer)}\n  At time: ${new Date()+date.getHours()}`,none)
 
     });
 });
@@ -89,26 +104,23 @@ server.listen(9876,function(){
 
 
 
-
 /*
 Handlers
 _______________
 Sample - A demo handler
 ohnoes - A 404 handler
 */
-var handlers = {
-
-};
+var handlers = {};
 
 //Sample handler
 handlers.sample = function(data,callback) {
     //Callback a 200 status code and a payload object for the demo
-    callback(200,{'mar':'cute'})
+    callback(200,{'mar':'cute'});
 };
 
 //Handler not found
 handlers.ohnoes = function(data,callback) {
-    callback(404)
+    callback(404);
 };
 
 //A cool router
