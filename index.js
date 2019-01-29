@@ -72,26 +72,21 @@ var server = http.createServer(function(req,res) {
 
 
         //Now send the req to the handler specified in the router
-        handlerReq(data,function(statCode,payload) {
+        handlerReq(data,function(statCode,payload,objTyp) {
             //Use the status code from the handler, or just use 200 (OK)
             statCode    = typeof(statCode) == 'number' ? statCode : 200;
+            objTyp      = typeof(objTyp) == 'string' ? objTyp   :   'application/JSON';
             
             //Use the payload from the handler or return empty obj.
-            //NOTE about the shitty if/else filters: they're a secret
-            if (trimPath == 'best') {
-                var payloadStr  = payload
-            } else {
+            //CHeck if we're using JSON/didn't define the payload type then go ahead and convert the JSON/obj into a string
+            if (objTyp == 'application/JSON') {
                 payload = typeof(payload) == 'object' ? payload : {};
                 //Convert the payload to a string to send back to the user
                 var payloadStr  = JSON.stringify(payload);
             };            
 
             //Respond to the req
-            if (trimPath == 'best') {
-                res.setHeader('Content-Type','application/HTML')
-            }   else {
-                res.setHeader('Content-Type','application/JSON')
-            };
+            res.setHeader('Content-Type',objTyp)
             res.writeHead(statCode);
             res.end(payloadStr);
     
@@ -137,6 +132,10 @@ handlers.sample = function(data,callback) {
     callback(200,{'sample':'json'});
 };
 
+handlers.demosite = function(data,callback) {
+    //Send a demo website
+    callback(201,"<body><h1>test</h1></body>","application/HTML")
+}
 handlers.best = function(data,callback) {
     callback(200,"<head><link href='https://fonts.googleapis.com/css?family=Major+Mono+Display' rel='stylesheet'></head><body><style>body, html, h1 {font-family: 'Major Mono Display', monospace;}; h3{font-family: 'Major Mono Display', monospace; font-size: 24px}</style><h1>Mar is a cutie</h1><h3>❤</h3></body")
 }
@@ -148,5 +147,6 @@ handlers.ohnoes = function(data,callback) {
 //A cool router
 var router = {
     "sample" : handlers.sample,
-    "best" : handlers.best
+    "best" : handlers.best,
+    "demosite"  : handlers.demosite
 };
