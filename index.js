@@ -123,6 +123,14 @@ ohnoes - A 404 handler
 */
 var handlers = {};
 
+
+/*Note for future development: Start using 3 callbacks
+
+1st - The code to respond with
+2nd - Payload/content
+3rd - Type (if none specified then default to JSON. By doing this we allow other payloads like HTML or other bin. content) 
+*/
+
 //Sample handler
 handlers.sample = function(data,callback) {
     //Callback a 200 status code and a payload object for the demo
