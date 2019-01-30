@@ -1,10 +1,12 @@
-*Currently pretty inefficient*
+Currently pretty inefficient*
 
 
 # Another RESTful API
 
 ## What is this
-A Node.JS based API that also functions as content delivery. It's main purpose is to provide authentication/ACL and also to deliver content like websites and most application/* data.
+A Node.JS based API that also functions as content delivery. It's main purpose is to provide authentication/ACL and also to deliver content like websites and application/* data
+
+This is going to be used for an application I'm currently making.
 
 ## Usage
 The application can be launched in multiple environment modes (this is still a WIP, going to introduce features into each environment like security features etc)
