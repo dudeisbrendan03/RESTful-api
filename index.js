@@ -10,6 +10,21 @@ request = col.bg_black+col.yellow
 warn = col.bg_red+col.white
 success = col.bg_green+col.white
 none = col.reset+col.reset
+var exitVal = 0
+
+//Catch exit
+process.on('SIGINT', function() {
+    console.warn(warn+"[w] Exit requested - Press CTRL+C again to gracefully exit");
+    if (exitVal) {
+        console.warn(warn+"[w] Stopping server...")
+        server.close()
+        console.info(success+"[s] Server stopped")
+        console.info(none+'Resetting terminal colour\n[i] Killing process')
+        process.exit();
+    } else {
+        exitVal = 1
+    }
+});
 
 //Start message after config has been set.
 console.info(info+'[i] Firing up the engines!',none);
