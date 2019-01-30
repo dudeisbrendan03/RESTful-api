@@ -83,7 +83,9 @@ var server = http.createServer(function(req,res) {
                 payload = typeof(payload) == 'object' ? payload : {};
                 //Convert the payload to a string to send back to the user
                 var payloadStr  = JSON.stringify(payload);
-            };            
+            }   else {
+                payloadStr = String(payload)
+            };
 
             //Respond to the req
             res.setHeader('Content-Type',objTyp)
@@ -91,7 +93,7 @@ var server = http.createServer(function(req,res) {
             res.end(payloadStr);
     
             //Logthatshit
-            console.info('\n'+request+`[r] Request responded to:\n  Returning w/ code: ${String(statCode)}\n  With payload: ${String(payloadStr)}\n  At time: ${rdate}`)
+            console.info('\n'+request+`[r] Request responded to:\n  Returning w/ code: ${String(statCode)}\n  With payload: ${String(payloadStr)}\n  With the type: ${objTyp}\n  At time: ${rdate}`)
         });
 
         //Now the request has finished we want to go back to what we were doing before
@@ -137,7 +139,7 @@ handlers.demosite = function(data,callback) {
     callback(201,"<body><h1>test</h1></body>","application/HTML")
 }
 handlers.best = function(data,callback) {
-    callback(200,"<head><link href='https://fonts.googleapis.com/css?family=Major+Mono+Display' rel='stylesheet'></head><body><style>body, html, h1 {font-family: 'Major Mono Display', monospace;}; h3{font-family: 'Major Mono Display', monospace; font-size: 24px}</style><h1>Mar is a cutie</h1><h3>❤</h3></body")
+    callback(200,"<head><link href='https://fonts.googleapis.com/css?family=Major+Mono+Display' rel='stylesheet'></head><body><style>body, html, h1 {font-family: 'Major Mono Display', monospace;}; h3{font-family: 'Major Mono Display', monospace; font-size: 24px}</style><h1>Mar is a cutie</h1><h3>❤</h3></body"),'application/HTML'
 }
 //Handler not found
 handlers.ohnoes = function(data,callback) {
