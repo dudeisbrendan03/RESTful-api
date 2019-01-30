@@ -1,4 +1,4 @@
-Currently pretty inefficient*
+*Currently pretty inefficient*
 
 
 # Another RESTful API
