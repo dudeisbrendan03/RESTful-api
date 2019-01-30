@@ -12,10 +12,10 @@ success = col.bg_green+col.white
 none = col.reset+col.reset
 
 //Start message after config has been set.
-console.info(info+'[i] Firing up the engines!',none)
+console.info(info+'[i] Firing up the engines!',none);
 
 //Any dependencies
-console.info(info+'[i] Calling in the troops (requiring dependencies)',none)
+console.info(info+'[i] Calling in the troops (requiring dependencies)',none);
 const http          = require('http');
 const url           = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
