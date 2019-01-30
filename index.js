@@ -21,6 +21,11 @@ const url           = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config        = require('./config');
 console.info('\nNJSAPIPROJ-V1-'+config.env+'\n')
+if (config.ip == '0.0.0.0') {
+    console.warn(warn+'[w] You are running on all available IPs. This is considered bad practice and possibly dangerous, make sure you have double checked your config.')
+} else if (config.ip == '127.0.0.1') {
+    console.info(info+'[i] Running at localhost, the server will not be able to be access by other devices without tunneling.')
+};
 
 //Date/time
 var date = new Date();
@@ -106,8 +111,8 @@ var server = http.createServer(function(req,res) {
 });
 
 //Start the server
-server.listen(config.port,function(){
-    console.log(success+'[s] Server is listening on ',col.inverse,config.port,none)
+server.listen(config.port,config.ip,function(){
+    console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.port,none)
 })
 
 
