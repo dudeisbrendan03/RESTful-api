@@ -109,6 +109,7 @@ var server = http.createServer(function(req,res) {
 
             //Respond to the req
             res.setHeader('Content-Type',objTyp)
+            res.setHeader('status','good')
             res.writeHead(statCode);
             res.end(payloadStr);
     
@@ -156,7 +157,9 @@ handlers.sample = function(data,callback) {
 //Check if the server is available
 handlers.up = function(data,callback) {
     if (data.headers['status'] == 'na') {
-        callback(200,{'status':'good','ImGood':'ThanksForAsking uwu'})
+        callback(200,{'ImGood':'ThanksForAsking uwu'})
+    } else if (data.headers['headers.status'] == 'na') {
+        callback(200,{'ImGood':'ThanksForAsking uwu'})
     } else {
         callback(204)
     }
