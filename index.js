@@ -153,10 +153,17 @@ handlers.sample = function(data,callback) {
     //Callback a 200 status code and a payload object for the demo
     callback(200,{'sample':'json'});
 };
-
+//Check if the server is available
+handlers.up = function(data,callback) {
+    if (data.headers['status'] == 'na') {
+        callback(200,{'status':'good','ImGood':'ThanksForAsking uwu'})
+    } else {
+        callback(204)
+    }
+};
 handlers.demosite = function(data,callback) {
     //Send a demo website
-    callback(201,"<body><h1>test</h1></body>","application/HTML")
+    callback(200,"<body><h1>test</h1></body>","application/HTML")
 }
 handlers.best = function(data,callback) {
     callback(200,"<head><link href='https://fonts.googleapis.com/css?family=Major+Mono+Display' rel='stylesheet'></head><body><style>body, html, h1 {font-family: 'Major Mono Display', monospace;}; h3{font-family: 'Major Mono Display', monospace; font-size: 24px}</style><h1>Mar is a cutie</h1><h3>❤</h3></body"),'application/HTML'
@@ -170,5 +177,6 @@ handlers.ohnoes = function(data,callback) {
 var router = {
     "sample" : handlers.sample,
     "best" : handlers.best,
-    "demosite"  : handlers.demosite
+    "demosite"  : handlers.demosite,
+    "up"    :   handlers.up
 };
