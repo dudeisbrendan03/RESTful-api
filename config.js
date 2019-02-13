@@ -18,7 +18,8 @@ environments.staging = {
     'httpsport': 8766,
     'env'   :   'staging',
     'ip'    :   '127.0.0.1',//should be localhost/private
-'secured'   :   false//doesn't need to be secured in local development
+'secured'   :   false,//doesn't need to be secured in local development
+'keephttpon':   true//When false the HTTP server will not run if the HTTPS server is running
 };
 
 //Production
@@ -27,7 +28,9 @@ environments.production = {
     'httpsport': 443,
     'env'   :   'production',
     'ip'    :   '123.456.789.012',//should be a public IP - not 0.0.0.0
-'secured'   :   true
+'secured'   :   true,
+'keephttpon':   true
+
 };
 
 //Idiot (runs on port 80)
@@ -36,7 +39,8 @@ environments.idiot = {
     'httpsport' : 81,
     'env'   :   'idiot',
     'ip'    :   '0.0.0.0',
-'secured'   :   false
+'secured'   :   false,
+'keephttpon':   true
 }
 
 //Less of an idiot (run on port 8080)
@@ -45,7 +49,8 @@ environments.lessidiot = {
     'httpsport' : 8081,
     'env'   :   'Less of an idiot',
     'ip'    :   '0.0.0.0',
-'secured'   :   true
+'secured'   :   true,
+'keephttpon':   true
 }
 //Export environment (depending on how the script was launched)
 var curEnv  =   typeof(process.env.NODE_ENV)    ==  'string'    ?   process.env.NODE_ENV.toLowerCase()  :   '';//Grab the environment varialbe NODE_ENV and store it in curEnv in lower case, if it doesn't exist leave it blank

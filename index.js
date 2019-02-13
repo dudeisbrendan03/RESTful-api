@@ -34,6 +34,7 @@ console.info(info+'[i] Firing up the engines!',none);
 //Any dependencies
 console.info(info+'[i] Calling in the troops (requiring dependencies)',none);
 const http          = require('http');
+const https         = require('https');
 const url           = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config        = require('./config');
@@ -49,9 +50,30 @@ var date = new Date();
 var current_hour = date.getHours();
 rdate = date+current_hour
 
-//Respond to requests with a string and get all the content and data from the request
+
 //HTTP Server
 var server = http.createServer(function(req,res) {
+    logic(req,res)
+});
+
+//Start the HTTP server
+server.listen(config.httpport,config.ip,function(){
+    console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.httpport,none)
+})
+server.on('error',function(){
+    console.error(errorc+'[e] Failed to attach to the IP or port that was specified')
+    console.warn(warn+'[w] Exiting')
+    console.warn(warn+"[w] Stopping server...")
+    server.close()
+    console.warn(errorc+"[e] Server died")
+    console.info(success+"[s] Server stopped")
+    console.info(none+'Resetting terminal colour\n[i] Killing process')
+    process.exit();
+})
+
+//Instead of making http.createServer and https.createServer we can place all the code/logic from the current setup which then may be called by either one.
+//Respond to requests with a string and get all the content and data from the request
+var logic = function(req,res) {
     //Parse the req
     var reqUrl = url.parse(req.url,true);//Get the URL the user used and parse it.
 
@@ -126,23 +148,7 @@ var server = http.createServer(function(req,res) {
         console.log('\n'+request+`[r] Requested recieved:\n  On path: '${trimPath}'\n  Using method: ${method.toUpperCase()}\n  With query: ${JSON.stringify(queryStringObj)}\n  The headers:\n    ${JSON.stringify(headers)}\n  Payload: ${String(buffer)}\n  At time: ${new Date()+date.getHours()}`,none)
 
     });
-});
-
-//Start the server
-server.listen(config.port,config.ip,function(){
-    console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.port,none)
-})
-server.on('error',function(){
-    console.error(errorc+'[e] Failed to attach to the IP or port that was specified')
-    console.warn(warn+'[w] Exiting')
-    console.warn(warn+"[w] Stopping server...")
-    server.close()
-    console.warn(errorc+"[e] Server died")
-    console.info(success+"[s] Server stopped")
-    console.info(none+'Resetting terminal colour\n[i] Killing process')
-    process.exit();
-})
-
+};
 
 /*
 Handlers
