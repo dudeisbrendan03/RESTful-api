@@ -19,7 +19,9 @@ environments.staging = {
     'env'   :   'staging',
     'ip'    :   '127.0.0.1',//should be localhost/private
 'secured'   :   false,//doesn't need to be secured in local development
-'keephttpon':   true//When false the HTTP server will not run if the HTTPS server is running
+'keephttpon':   true,//When false the HTTP server will not run if the HTTPS server is running
+'certloc' : './https/cert.pem',//HTTPS Certificate, leave default if none
+'keyloc' : './https/cert.pem'//HTTPS private key, leave default if none
 };
 
 //Production
@@ -29,8 +31,9 @@ environments.production = {
     'env'   :   'production',
     'ip'    :   '123.456.789.012',//should be a public IP - not 0.0.0.0
 'secured'   :   true,
-'keephttpon':   true
-
+'keephttpon':   true,
+'certloc' : './https/cert.pem',
+'keyloc' : './https/cert.pem'
 };
 
 //Idiot (runs on port 80)
@@ -40,7 +43,9 @@ environments.idiot = {
     'env'   :   'idiot',
     'ip'    :   '0.0.0.0',
 'secured'   :   false,
-'keephttpon':   true
+'keephttpon':   true,
+'certloc' : './https/cert.pem',
+'keyloc' : './https/cert.pem'
 }
 
 //Less of an idiot (run on port 8080)
@@ -50,7 +55,9 @@ environments.lessidiot = {
     'env'   :   'Less of an idiot',
     'ip'    :   '0.0.0.0',
 'secured'   :   true,
-'keephttpon':   true
+'keephttpon':   true,
+'certloc' : './https/cert.pem',
+'keyloc' : './https/cert.pem'
 }
 //Export environment (depending on how the script was launched)
 var curEnv  =   typeof(process.env.NODE_ENV)    ==  'string'    ?   process.env.NODE_ENV.toLowerCase()  :   '';//Grab the environment varialbe NODE_ENV and store it in curEnv in lower case, if it doesn't exist leave it blank
