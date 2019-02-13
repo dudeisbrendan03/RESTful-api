@@ -17,7 +17,7 @@ var exitVal = 0
 process.on('SIGINT', function() {
     if (exitVal) {
         console.warn(warn+"[w] Stopping server...")
-        server.close()
+        httpserver.close()
         console.warn(errorc+"[e] Server died")
         console.info(success+"[s] Server stopped")
         console.info(none+'Resetting terminal colour\n[i] Killing process')
@@ -38,6 +38,7 @@ const https         = require('https');
 const url           = require('url');
 const StringDecoder = require('string_decoder').StringDecoder;
 const config        = require('./config');
+const fs            = require('fs');
 console.info('\nNJSAPIPROJ-V1-'+config.env+'\n')
 if (config.ip == '0.0.0.0') {
     console.warn(warn+'[w] You are running on all available IPs. This is considered bad practice and possibly dangerous, make sure you have double checked your config.')
@@ -45,6 +46,12 @@ if (config.ip == '0.0.0.0') {
     console.info(info+'[i] Running at localhost, the server will not be able to be access by other devices without tunneling.')
 };
 
+//Check if HTTP and HTTPS are disabled
+if (config.secured == false && config.keephttpon == false) {
+    console.error(errorc+'[e] Both the HTTP and HTTPS servers are disabled. Will not start - now exiting.')
+    console.info(none+'Resetting terminal colour\n[i] Killing process')
+    process.exit();
+}
 //Date/time
 var date = new Date();
 var current_hour = date.getHours();
@@ -52,19 +59,45 @@ rdate = date+current_hour
 
 
 //HTTP Server
-var server = http.createServer(function(req,res) {
-    logic(req,res)
+var httpserver = http.createServer(function(req,res) {
+    if (config.keephttpon == true) {
+        logic(req,res)
+    }
 });
 
+//HTTPS Server
+var httpserver = https.createServer({'key':fs.readFileSync(config.keyloc),'cert':fs.readFileSync(config.certloc)},function(req,res) {
+    if (config.secured == true) {
+        logic(req,res)
+    }
+});
+
+
+//i'll make this more efficient in the future, but it doesn't impact api performance
 //Start the HTTP server
-server.listen(config.httpport,config.ip,function(){
+httpserver.listen(config.httpport,config.ip,function(){
     console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.httpport,none)
 })
-server.on('error',function(){
+httpserver.on('error',function(){
     console.error(errorc+'[e] Failed to attach to the IP or port that was specified')
     console.warn(warn+'[w] Exiting')
     console.warn(warn+"[w] Stopping server...")
-    server.close()
+    httpserver.close()
+    console.warn(errorc+"[e] Server died")
+    console.info(success+"[s] Server stopped")
+    console.info(none+'Resetting terminal colour\n[i] Killing process')
+    process.exit();
+})
+
+//Start the HTTPS server
+httpsserver.listen(config.httpsport,config.ip,function(){
+    console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.httpsport,none)
+})
+httpsserver.on('error',function(){
+    console.error(errorc+'[e] Failed to attach to the IP or port that was specified')
+    console.warn(warn+'[w] Exiting')
+    console.warn(warn+"[w] Stopping server...")
+    httpserver.close()
     console.warn(errorc+"[e] Server died")
     console.info(success+"[s] Server stopped")
     console.info(none+'Resetting terminal colour\n[i] Killing process')
