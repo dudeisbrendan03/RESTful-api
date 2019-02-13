@@ -66,7 +66,7 @@ var httpserver = http.createServer(function(req,res) {
 });
 
 //HTTPS Server
-var httpserver = https.createServer({'key':fs.readFileSync(config.keyloc),'cert':fs.readFileSync(config.certloc)},function(req,res) {
+var httpsserver = https.createServer({'key':fs.readFileSync(config.keyloc),'cert':fs.readFileSync(config.certloc)},function(req,res) {
     if (config.secured == true) {
         logic(req,res)
     }
