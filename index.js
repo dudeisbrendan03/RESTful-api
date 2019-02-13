@@ -66,7 +66,7 @@ var httpserver = http.createServer(function(req,res) {
 });
 
 //HTTPS Server
-var httpsserver = https.createServer({'key':fs.readFileSync(config.keyloc),'cert':fs.readFileSync(config.certloc)},function(req,res) {
+var httpsserver = https.createServer({'key':fs.readFileSync(config.keyloc).toString('utf8'),'cert':fs.readFileSync(config.certloc).toString('utf8')},function(req,res) {
     if (config.secured == true) {
         logic(req,res)
     }
@@ -75,34 +75,39 @@ var httpsserver = https.createServer({'key':fs.readFileSync(config.keyloc),'cert
 
 //i'll make this more efficient in the future, but it doesn't impact api performance
 //Start the HTTP server
-httpserver.listen(config.httpport,config.ip,function(){
-    console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.httpport,none)
-})
-httpserver.on('error',function(){
-    console.error(errorc+'[e] Failed to attach to the IP or port that was specified')
-    console.warn(warn+'[w] Exiting')
-    console.warn(warn+"[w] Stopping server...")
-    httpserver.close()
-    console.warn(errorc+"[e] Server died")
-    console.info(success+"[s] Server stopped")
-    console.info(none+'Resetting terminal colour\n[i] Killing process')
-    process.exit();
-})
+if (config.keephttpon == true) {
+    httpserver.listen(config.httpport,config.ip,function(){
+        console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.httpport,col.bg_blue,col.hicolor,'HTTP',none)
+    })
+    httpserver.on('error',function(){
+        console.error(errorc+'[e] Failed to attach to the IP or port that was specified')
+        console.warn(warn+'[w] Exiting')
+        console.warn(warn+"[w] Stopping server...")
+        httpserver.close()
+        console.warn(errorc+"[e] Server died")
+        console.info(success+"[s] Server stopped")
+        console.info(none+'Resetting terminal colour\n[i] Killing process')
+        process.exit();
+    })
+}
+
 
 //Start the HTTPS server
-httpsserver.listen(config.httpsport,config.ip,function(){
-    console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.httpsport,none)
-})
-httpsserver.on('error',function(){
-    console.error(errorc+'[e] Failed to attach to the IP or port that was specified')
-    console.warn(warn+'[w] Exiting')
-    console.warn(warn+"[w] Stopping server...")
-    httpserver.close()
-    console.warn(errorc+"[e] Server died")
-    console.info(success+"[s] Server stopped")
-    console.info(none+'Resetting terminal colour\n[i] Killing process')
-    process.exit();
-})
+if (config.secured == true) {
+    httpsserver.listen(config.httpsport,config.ip,function(){
+        console.log(success+'[s] Server is listening on ',col.inverse,config.ip+':'+config.httpsport,col.bg_blue,col.hicolor,'HTTPS',none)
+    })
+    httpsserver.on('error',function(){
+        console.error(errorc+'[e] Failed to attach to the IP or port that was specified')
+        console.warn(warn+'[w] Exiting')
+        console.warn(warn+"[w] Stopping server...")
+        httpserver.close()
+        console.warn(errorc+"[e] Server died")
+        console.info(success+"[s] Server stopped")
+        console.info(none+'Resetting terminal colour\n[i] Killing process')
+        process.exit();
+    })
+}
 
 //Instead of making http.createServer and https.createServer we can place all the code/logic from the current setup which then may be called by either one.
 //Respond to requests with a string and get all the content and data from the request
