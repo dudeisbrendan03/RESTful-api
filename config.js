@@ -14,7 +14,8 @@ Secured - Enable HTTPS
 
 //Staging
 environments.staging = {
-    'port'  :   8765,
+    'httpport'  :   8765,
+    'httpsport': 8766,
     'env'   :   'staging',
     'ip'    :   '127.0.0.1',//should be localhost/private
 'secured'   :   false//doesn't need to be secured in local development
@@ -22,7 +23,8 @@ environments.staging = {
 
 //Production
 environments.production = {
-    'port'  :   9876,
+    'httpport'  :   9876,
+    'httpsport': 443,
     'env'   :   'production',
     'ip'    :   '123.456.789.012',//should be a public IP - not 0.0.0.0
 'secured'   :   true
@@ -30,7 +32,8 @@ environments.production = {
 
 //Idiot (runs on port 80)
 environments.idiot = {
-    'port'  :   80,
+    'httpport'  :   80,
+    'httpsport' : 81,
     'env'   :   'idiot',
     'ip'    :   '0.0.0.0',
 'secured'   :   false
@@ -38,7 +41,8 @@ environments.idiot = {
 
 //Less of an idiot (run on port 8080)
 environments.lessidiot = {
-    'port'  :   8080,
+    'httpport'  :   8080,
+    'httpsport' : 8081,
     'env'   :   'Less of an idiot',
     'ip'    :   '0.0.0.0',
 'secured'   :   true
