@@ -42,8 +42,12 @@ const http = require('http'),
     { StringDecoder } = require('string_decoder'),
     config = require('./config'),
     fs = require('fs'),
-    verCheck = require('./lib/versionChecker');
+    verCheck = require('./lib/versionChecker'),
+    data = require('./lib/dataHandler');
 
+data.create('test', 'demo', { a: 'a' }, function (err) {
+    log.error(err);
+});
 console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n`);
 if (config.ip === '0.0.0.0')
     log.warn('You are running on all available IPs. This is considered bad practice and possibly dangerous, make sure you have double checked your config.');
