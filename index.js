@@ -42,16 +42,16 @@ const http = require('http'),
     { StringDecoder } = require('string_decoder'),
     config = require('./config'),
     fs = require('fs'),
-    verCheck = require('./versionChecker');
+    verCheck = require('./lib/versionChecker');
 
 console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n`);
-if (config.ip == '0.0.0.0')
+if (config.ip === '0.0.0.0')
     log.warn('You are running on all available IPs. This is considered bad practice and possibly dangerous, make sure you have double checked your config.');
-else if (config.ip == '127.0.0.1')
+else if (config.ip === '127.0.0.1')
     log.info('Running at localhost, the server will not be able to be access by other devices without tunneling.');
 
 // Check if HTTP and HTTPS are disabled
-if (config.secured == false && config.keephttpon == false) {
+if (config.secured === false && config.keephttpon === false) {
     log.error('Both the HTTP and HTTPS servers are disabled. Will not start - now exiting.');
     log.info('Killing process');
     process.exit();
@@ -64,7 +64,7 @@ const date = new Date(),
 
 // HTTP Server
 const httpServer = http.createServer((req, res) => {
-    if (config.keephttpon == true)
+    if (config.keephttpon === true)
         logic(req, res);
 });
 
@@ -81,7 +81,7 @@ try {
 }
 
 // Start the HTTP server
-if (config.keephttpon == true) {
+if (config.keephttpon === true) {
     httpServer.listen(config.httpport, config.ip, function () {
         log.success(`Server is listening on ${col.inverse}${config.ip}:${config.httpport}${col.background.blue + col.hicolour} HTTP`);
     });
@@ -98,7 +98,7 @@ if (config.keephttpon == true) {
 
 
 // Start the HTTPS server
-if (config.secured == true) {
+if (config.secured === true) {
     httpsServer.listen(config.httpsport, config.ip, () => {
         log.success(`Server is listening on ${col.inverse}${config.ip}:${config.httpsport}${col.background.blue + col.hicolour} HTTPS`);
     });
@@ -153,15 +153,15 @@ const logic = (req, res) => {
         // Now send the req to the handler specified in the router
         handlerReq(data, function (statCode, payload, objTyp) {
             // Use the status code from the handler, or just use 200 (OK)
-            statCode = typeof statCode == 'number' ? statCode : 200;
-            objTyp = typeof objTyp == 'string' ? objTyp : 'text/HTML';
+            statCode = typeof statCode === 'number' ? statCode : 200;
+            objTyp = typeof objTyp === 'string' ? objTyp : 'text/HTML';
 
             // Use the payload from the handler or return empty obj.
             // Check if we're using JSON/didn't define the payload type then go ahead and convert the JSON/obj into a string
 
             let payloadStr = '', noStr = false;
-            if (objTyp == 'application/JSON') {
-                payload = typeof payload == 'object' ? payload : {};
+            if (objTyp === 'application/JSON') {
+                payload = typeof payload === 'object' ? payload : {};
                 // Convert the payload to a string to send back to the user
                 payloadStr = JSON.stringify(payload);
             } else if (objTyp.includes('image/')) {
@@ -228,9 +228,9 @@ handlers.sample = function (data, callback) {
 };
 //Check if the server is available
 handlers.up = function (data, callback) {
-    if (data.headers['status'] == 'na') {
+    if (data.headers['status'] === 'na') {
         callback(200, { 'ImGood': 'ThanksForAsking uwu' })
-    } else if (data.headers['headers.status'] == 'na') {
+    } else if (data.headers['headers.status'] === 'na') {
         callback(200, { 'ImGood': 'ThanksForAsking uwu' })
     } else {
         callback(204)
