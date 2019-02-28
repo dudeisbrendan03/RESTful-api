@@ -20,7 +20,7 @@ process.on('SIGINT', () => {
         try {
             httpServer.close();
             httpsServer.close();
-        } catch (e) { log.warn('A server was not running') }
+        } catch (e) { log.warn('A server was not running'); }
         log.success('Server stopped.');
         log.info('Killing process ...');
         process.exit();
@@ -152,7 +152,7 @@ const logic = (req, res) => {
 
         // Construct the object to send to the handler
         const data = { trimPath, queryStringObj, method, headers, payload };
-        console.log(JSON.stringify(data))
+        console.log(JSON.stringify(data));
 
         // Now send the req to the handler specified in the router
         handlerReq(data, function (statCode, payload, objTyp) {
@@ -233,23 +233,23 @@ handlers.sample = function (data, callback) {
 //Check if the server is available
 handlers.up = function (data, callback) {
     if (data.headers['status'] === 'na') {
-        callback(200, { 'ImGood': 'ThanksForAsking uwu' })
+        callback(200, { 'ImGood': 'ThanksForAsking uwu' });
     } else if (data.headers['headers.status'] === 'na') {
-        callback(200, { 'ImGood': 'ThanksForAsking uwu' })
+        callback(200, { 'ImGood': 'ThanksForAsking uwu' });
     } else {
-        callback(204)
+        callback(204);
     }
 };
 handlers.demosite = function (data, callback) {
     //Send a demo website
-    callback(200, "<body><h1>test</h1></body>", "application/HTML")
-}
+    callback(200, "<body><h1>test</h1></body>", "application/HTML");
+};
 handlers.best = function (data, callback) {
-    callback(200, "<head><link href='https://fonts.googleapis.com/css?family=Major+Mono+Display' rel='stylesheet'></head><body><style>body, html, h1 {font-family: 'Major Mono Display', monospace;}; h3{font-family: 'Major Mono Display', monospace; font-size: 24px}</style><h1>Mar is a cutie</h1><h3>❤</h3></body", 'application/HTML')
-}
+    callback(200, "<head><link href='https://fonts.googleapis.com/css?family=Major+Mono+Display' rel='stylesheet'></head><body><style>body, html, h1 {font-family: 'Major Mono Display', monospace;}; h3{font-family: 'Major Mono Display', monospace; font-size: 24px}</style><h1>Mar is a cutie</h1><h3>❤</h3></body", 'application/HTML');
+};
 //Handler not found
 handlers.ohnoes = function (data, callback) {
-    callback(404, { status: 404, error: "NOFOUND-1", desc: "The requested content does not exist." }, "application/JSON")
+    callback(404, { status: 404, error: "NOFOUND-1", desc: "The requested content does not exist." }, "application/JSON");
 };
 //Empty 202 response
 handlers.ohnoes = function (data, callback) {
@@ -257,8 +257,8 @@ handlers.ohnoes = function (data, callback) {
 };
 //Favicon handler
 handlers.favicon = function (data, callback) {
-    callback(200, fs.readFileSync('Resources/DrutLounge.logo.ico'), "image/vnd.microsoft.icon")
-}
+    callback(200, fs.readFileSync('Resources/DrutLounge.logo.ico'), "image/vnd.microsoft.icon");
+};
 //A cool router
 var router = {
     "sample": handlers.sample,
