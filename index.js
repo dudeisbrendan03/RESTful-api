@@ -163,7 +163,7 @@ const logic = (req, res) => {
         handlerReq(data, function (statCode, payload, objTyp) {
             // Use the status code from the handler, or just use 200 (OK)
             statCode = typeof statCode === 'number' ? statCode : 200;
-            objTyp = typeof objTyp === 'string' ? objTyp : 'text/HTML';
+            objTyp = typeof objTyp === 'string' ? objTyp : 'application/JSON';
 
             // Use the payload from the handler or return empty obj.
             // Check if we're using JSON/didn't define the payload type then go ahead and convert the JSON/obj into a string
