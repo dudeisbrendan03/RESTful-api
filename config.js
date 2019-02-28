@@ -38,7 +38,7 @@ const environments = {
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
         favicon: './resouces/favicon.ico'
-    }
+    },
 
     // Custom configurations go here.
 };

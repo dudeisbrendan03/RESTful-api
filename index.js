@@ -105,18 +105,21 @@ if (config.keephttpon === true) {
 
 // Start the HTTPS server
 if (config.secured === true) {
-    httpsServer.listen(config.httpsport, config.ip, () => {
-        log.success(`Server is listening on ${col.inverse}${config.ip}:${config.httpsport}${col.background.blue + col.hicolour} HTTPS`);
-    });
-    httpsServer.on('error', function () {
-        log.error('Failed to attach to the IP or port that was specified');
-        log.warn('Exiting');
-        log.warn('Stopping server...');
-        httpsServer.close();
-        log.success('Server stopped');
-        log.info('Killing process');
-        process.exit();
-    });
+    try {
+        httpsServer.listen(config.httpsport, config.ip, () => {
+            log.success(`Server is listening on ${col.inverse}${config.ip}:${config.httpsport}${col.background.blue + col.hicolour} HTTPS`);
+        });
+        httpsServer.on('error', function () {
+            log.error('Failed to attach to the IP or port that was specified');
+            log.warn('Exiting');
+            log.warn('Stopping server...');
+            httpsServer.close();
+            log.success('Server stopped');
+            log.info('Killing process');
+            process.exit();
+        });
+    } catch(e) {log.error("Issue Starting HTTPS Server")}
+    
 }
 
 // Instead of making http.createServer and https.createServer we can place all the code/logic from the current setup which then may be called by either one.
