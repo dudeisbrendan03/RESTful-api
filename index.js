@@ -154,13 +154,13 @@ const logic = (req, res) => {
 
         // Construct the object to send to the handler
         const data = { trimPath, queryStringObj, method, headers, payload };
-        console.log(JSON.stringify(data));
+        
 
         // Now send the req to the handler specified in the router
         handlerReq(data, function (statCode, payload, objTyp) {
             // Use the status code from the handler, or just use 200 (OK)
             statCode = typeof statCode === 'number' ? statCode : 200;
-            objTyp = typeof objTyp === 'string' ? objTyp : 'application/JSON';
+            objTyp = typeof objTyp === 'string' ? objTyp : 'text/HTML';
 
             // Use the payload from the handler or return empty obj.
             // Check if we're using JSON/didn't define the payload type then go ahead and convert the JSON/obj into a string
@@ -230,7 +230,7 @@ let handlers = {};
 //Sample handler
 handlers.sample = function (data, callback) {
     //Callback a 200 status code and a payload object for the demo
-    callback(200, { 'sample': 'json' }, "application/JSON");
+    callback(200, { 'sample': 'json' });
 };
 //Check if the server is available
 handlers.up = function (data, callback) {
@@ -259,7 +259,11 @@ handlers.ohnoes = function (data, callback) {
 };
 //Favicon handler
 handlers.favicon = function (data, callback) {
-    callback(200, fs.readFileSync('Resources/DrutLounge.logo.ico'), "image/vnd.microsoft.icon");
+    try {
+        callback(200, fs.readFileSync(config.favicon), "image/vnd.microsoft.icon");
+    } catch (err) {
+        callback(404)
+    }
 };
 //A cool router
 var router = {

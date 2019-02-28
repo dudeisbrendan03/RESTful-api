@@ -23,7 +23,8 @@ const environments = {
         secured: false, // doesn't need to be secured in local development
         keephttpon: true,
         certloc: './https/cert.pem',
-        keyloc: './https/key.pem'
+        keyloc: './https/key.pem',
+        favicon: './resouces/favicon.ico'
     },
 
     // Default production configuration.
@@ -35,7 +36,8 @@ const environments = {
         secured: true,
         keephttpon: true,
         certloc: './https/cert.pem',
-        keyloc: './https/key.pem'
+        keyloc: './https/key.pem',
+        favicon: './resouces/favicon.ico'
     }
 
     // Custom configurations go here.
