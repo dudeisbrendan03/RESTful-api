@@ -1,66 +1,52 @@
-//Returns the config for a specific environment
-
-
-var environments = {};
+// Returns the config for a specific environment.
 
 /*
-Settings:
-
-Port    - the port the server will run on
-Env     - the name of the environment
-Ip      - The IP to attach to
-Secured - Enable HTTPS
+    settings:
+        httpport: port the HTTP server will run on
+        httpsport: port the HTTPS server will run on
+        env: name of the environment
+        ip: IP to attach to
+        secured: enable HTTPS
+        keepHTTPOn: enable HTTP
+        certloc: location of the HTTPS certificate
+        keyloc: location of the HTTPS key
 */
 
-//Staging
-environments.staging = {
-    'httpport'  :   8765,
-    'httpsport': 8766,
-    'env'   :   'staging',
-    'ip'    :   '127.0.0.1',//should be localhost/private
-'secured'   :   false,//doesn't need to be secured in local development
-'keephttpon':   true,//When false the HTTP server will not run if the HTTPS server is running
-'certloc' : './https/cert.pem',//HTTPS Certificate, leave default if none
-'keyloc' : './https/key.pem'//HTTPS private key, leave default if none
+const environments = {
+
+    // Default staging configuration.
+    staging: {
+        httpport: 8080,
+        httpsport: 8081,
+        env: 'staging',
+        ip: '0.0.0.0', // should be localhost/private
+        secured: false, // doesn't need to be secured in local development
+        keephttpon: true,
+        certloc: './https/cert.pem',
+        keyloc: './https/key.pem'
+    },
+
+    // Default production configuration.
+    production: {
+        httpport: 80,
+        httpsport: 443,
+        env: 'production',
+        ip: '123.456.789.012', // should be a public IP, not 0.0.0.0
+        secured: true,
+        keephttpon: true,
+        certloc: './https/cert.pem',
+        keyloc: './https/key.pem'
+    }
+
+    // Custom configurations go here.
 };
 
-//Production
-environments.production = {
-    'httpport'  :   9876,
-    'httpsport': 443,
-    'env'   :   'production',
-    'ip'    :   '123.456.789.012',//should be a public IP - not 0.0.0.0
-'secured'   :   true,
-'keephttpon':   true,
-'certloc' : './https/cert.pem',
-'keyloc' : './https/key.pem'
-};
+// Export environment (depending on how the script was launched)
 
-//Idiot (runs on port 80)
-environments.idiot = {
-    'httpport'  :   80,
-    'httpsport' : 81,
-    'env'   :   'idiot',
-    'ip'    :   '0.0.0.0',
-'secured'   :   false,
-'keephttpon':   true,
-'certloc' : './https/cert.pem',
-'keyloc' : './https/key.pem'
-}
+// Grab the environment variable NODE_ENV and store it in currentEnv in lowercase. Leave blank if it doesn't exist.
+const currentEnv = typeof process.env.NODE_ENV === 'string' ? process.env.NODE_ENV.toLowerCase() : '';
 
-//Less of an idiot (run on port 8080)
-environments.lessidiot = {
-    'httpport'  :   8080,
-    'httpsport' : 8081,
-    'env'   :   'Less of an idiot',
-    'ip'    :   '0.0.0.0',
-'secured'   :   true,
-'keephttpon':   true,
-'certloc' : './https/cert.pem',
-'keyloc' : './https/key.pem'
-}
-//Export environment (depending on how the script was launched)
-var curEnv  =   typeof(process.env.NODE_ENV)    ==  'string'    ?   process.env.NODE_ENV.toLowerCase()  :   '';//Grab the environment varialbe NODE_ENV and store it in curEnv in lower case, if it doesn't exist leave it blank
-var using   =   typeof(environments[curEnv])    ==  'object'    ?   environments[curEnv]    :   environments.staging;//If there is no env or it isn't in our env list then swap to staging, else use that environment config
+// If there is no environment or it isn't in our environment list then default to staging, else use that environment configuration.
+const using = typeof environments[currentEnv] === 'object' ? environments[currentEnv] : environments.staging;
 
-module.exports =   using;
+module.exports = using;
