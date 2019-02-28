@@ -15,10 +15,8 @@ Using an environment:
 `NODE_ENV=env-name node.`
 
 The current env-name's in the project are:
-- production
-- staging
-- idiot
-- lessidiot
+- production (123.456.789.012:80/443)
+- staging (0.0.0.0:8080/8081)
 
 If there is no environment defined when starting the application then it defaults to staging
 
