@@ -1,7 +1,7 @@
 // Index file for the API.
 
 // Console colours.
-const col = require('./colours.js');
+const col = require('./lib/colours.js');
 let exitVal = 0;
 
 const log = {
