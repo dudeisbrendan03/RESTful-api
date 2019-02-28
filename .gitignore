@@ -65,3 +65,6 @@ https/
 
 .vs/
 .vscode/
+
+package.json
+*.njsproj
