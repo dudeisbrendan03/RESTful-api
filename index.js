@@ -256,10 +256,7 @@ handlers.best = function (data, callback) {
 handlers.ohnoes = function (data, callback) {
     callback(404, { status: 404, error: "NOFOUND-1", desc: "The requested content does not exist." }, "application/JSON");
 };
-//Empty 202 response
-handlers.ohnoes = function (data, callback) {
-    callback(200);
-};
+
 //Favicon handler
 handlers.favicon = function (data, callback) {
     try {
