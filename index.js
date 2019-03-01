@@ -7,7 +7,7 @@
 
 
 //Import logging
-const log = require('./lib/logging')
+const log = require('./lib/logging');
 //Import console colours
 const col = require('./lib/colours');
 let exitVal = 0;
