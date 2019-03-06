@@ -68,3 +68,6 @@ https/
 
 package.json
 *.njsproj*
+
+# generated users
+.tdat/users/*@*.json
