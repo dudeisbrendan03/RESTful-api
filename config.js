@@ -24,7 +24,8 @@ const environments = {
         keephttpon: true,
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
-        favicon: './resouces/favicon.ico'
+        favicon: './resouces/favicon.ico',
+        hashSecret: 'a'//Has no effect while utilizing SHA256
     },
 
     // Default production configuration.
@@ -37,7 +38,8 @@ const environments = {
         keephttpon: true,
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
-        favicon: './resouces/favicon.ico'
+        favicon: './resouces/favicon.ico',
+        hashSecret: 'a'
     },
 
     // Custom configurations go here.
