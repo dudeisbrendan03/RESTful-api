@@ -44,7 +44,8 @@ const http = require('http'),
     config = require('./config'),
     fs = require('fs'),
     verCheck = require('./lib/versionChecker'),
-    handlers = require('./lib/handlers');
+    handlers = require('./lib/handlers'),
+    etc = require('./lib/etclib');
 
 console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n`);
 if (config.ip === '0.0.0.0')
@@ -152,7 +153,8 @@ const logic = (req, res) => {
         const handlerReq = router[trimPath] || handlers.ohnoes; // if stat code is number, leave it as it is and if it isnt a number then define stat code as 200
 
         // Construct the object to send to the handler
-        const data = { trimPath, queryStringObj, method, headers, payload };
+        const sPayload = etc.safePJS(payload);//make sure that the payload wont cause any errors/issues, if it does return an empty object
+        const data = { trimPath, queryStringObj, method, headers, 'payload':sPayload };
         
 
         // Now send the req to the handler specified in the router
