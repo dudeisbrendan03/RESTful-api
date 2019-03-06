@@ -71,3 +71,4 @@ package.json
 
 # generated users
 .tdat/users/*@*.json
+bin/Microsoft.NodejsTools.WebRole.dll
