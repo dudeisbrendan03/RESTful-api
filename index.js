@@ -217,6 +217,6 @@ var router = {
     "best": handlers.best,
     "demosite": handlers.demosite,
     "ping": handlers.ping,
-    "users": handlers.user,
+    "user": handlers.user,
     "favicon.ico": handlers.favicon
 };
