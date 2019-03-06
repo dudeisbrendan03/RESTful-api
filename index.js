@@ -212,10 +212,11 @@ const logic = (req, res) => {
 
 //A cool router
 var router = {
+    "up": handlers.up,
     "sample": handlers.sample,
     "best": handlers.best,
     "demosite": handlers.demosite,
-    "up": handlers.up,
     "ping": handlers.ping,
+    "users": handlers.users,
     "favicon.ico": handlers.favicon
 };
