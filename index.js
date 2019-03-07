@@ -218,5 +218,6 @@ var router = {
     "demosite": handlers.demosite,
     "ping": handlers.ping,
     "user": handlers.user,
+    "auth": handlers.accesstoken,
     "favicon.ico": handlers.favicon
 };
