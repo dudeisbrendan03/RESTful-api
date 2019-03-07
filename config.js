@@ -26,7 +26,8 @@ const environments = {
         keyloc: './https/key.pem',
         favicon: './resouces/favicon.ico',
         hashSecret: 'a',//Has no effect while utilizing SHA256
-        tokenLength: 32 //The length of provisioned tokens
+        tokenLength: 32, //The length of provisioned tokens
+        tokenTime: 60 //Time (in minutes) until a token expires
     },
 
     // Default production configuration.
@@ -41,7 +42,8 @@ const environments = {
         keyloc: './https/key.pem',
         favicon: './resouces/favicon.ico',
         hashSecret: 'a',
-        tokenLength: 32
+        tokenLength: 32,
+        tokenTime: 60
     },
 
     // Custom configurations go here.
