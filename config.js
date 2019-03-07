@@ -25,7 +25,8 @@ const environments = {
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
         favicon: './resouces/favicon.ico',
-        hashSecret: 'a'//Has no effect while utilizing SHA256
+        hashSecret: 'a',//Has no effect while utilizing SHA256
+        tokenLength: 32 //The length of provisioned tokens
     },
 
     // Default production configuration.
@@ -39,7 +40,8 @@ const environments = {
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
         favicon: './resouces/favicon.ico',
-        hashSecret: 'a'
+        hashSecret: 'a',
+        tokenLength: 32
     },
 
     // Custom configurations go here.
