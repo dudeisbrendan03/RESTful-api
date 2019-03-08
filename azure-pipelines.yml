@@ -15,19 +15,16 @@ steps:
     versionSpec: '8.15'
   displayName: 'Install Node.js'
 
-- script: |
-    npm install mocha -g
-    npm install nyc -g
+- task: Npm@1
   displayName: 'npm install'
+  inputs:
+    command: install
 
 - task: Npm@1
   displayName: 'npm test'
   inputs:
     command: custom
     customCommand: 'test'
-
-- script: |
-    nyc --reporter=cobertura --reporter=html ./node_modules/.bin/mocha tests/**/*.js --reporter mocha-junit-reporter --reporter-options mochaFile=./TEST-RESULTS.xml
 
   displayName: 'test'
 - task: PublishTestResults@2
