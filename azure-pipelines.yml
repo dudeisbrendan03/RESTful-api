@@ -13,8 +13,7 @@ steps:
 - task: NodeTool@0
   inputs:
     versionSpec: '8.15'
-  displayName: 'Install Node.js'
-
+  
 - task: Npm@1
   displayName: 'npm install'
   inputs:
@@ -26,7 +25,6 @@ steps:
     command: custom
     customCommand: 'test'
 
-  displayName: 'test'
 - task: PublishTestResults@2
   inputs:
     testResultsFiles: '**/TEST-RESULTS.xml'
