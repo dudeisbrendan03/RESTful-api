@@ -70,7 +70,6 @@ describe('Task API Routes', function() {
                 });
         });
     });
-    });
 
     // Test tokens
     describe('/auth - create, get, delete', function() {
