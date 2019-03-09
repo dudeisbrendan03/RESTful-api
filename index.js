@@ -9,6 +9,8 @@
 const col = require('./lib/colours.js');
 let exitVal = 0;
 
+try { const verCheck = require('./lib/versionChecker'); } catch (e) { log.error('Failed to check version'); }//Try and check version
+
 const log = {
     info: text => console.info(`${col.background.blue + col.foreground.white}[i] ${text}${col.reset + col.reset}`),
     error: text => console.warn(`${col.background.red + col.foreground.white}[e] ${text}${col.reset + col.reset}`),
@@ -46,8 +48,7 @@ const http = require('http'),
     url = require('url'),
     { StringDecoder } = require('string_decoder'),
     config = require('./config'),
-    fs = require('fs'),
-    verCheck = require('./lib/versionChecker');
+    fs = require('fs');
 
 console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n`);
 if (config.ip === '0.0.0.0')
