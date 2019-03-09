@@ -9,7 +9,7 @@
 const col = require('./lib/colours.js');
 let exitVal = 0;
 
-try { const verCheck = require('./lib/versionChecker'); } catch (e) { log.error('Failed to check version'); }//Try and check version
+const verCheck = require('./lib/versionChecker'); 
 
 const log = {
     info: text => console.info(`${col.background.blue + col.foreground.white}[i] ${text}${col.reset + col.reset}`),
