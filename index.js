@@ -5,20 +5,12 @@
  * 
  */
 
-// Console colours.
-const col = require('./lib/colours.js');
+//Import logging, version checker and colours prior to everything else
+const log = require('./lib/logging'),
+    verCheck = require('./lib/versionChecker'),
+    col = require('./lib/colours');
+
 let exitVal = 0;
-
-const verCheck = require('./lib/versionChecker'); 
-
-const log = {
-    info: text => console.info(`${col.background.blue + col.foreground.white}[i] ${text}${col.reset + col.reset}`),
-    error: text => console.warn(`${col.background.red + col.foreground.white}[e] ${text}${col.reset + col.reset}`),
-    success: text => console.info(`${col.background.green + col.foreground.white}[s] ${text}${col.reset + col.reset}`),
-    warn: text => console.warn(`${col.background.white + col.foreground.red}[w] ${text}${col.reset + col.reset}`),
-    request: text => console.log(`${col.background.black + col.foreground.yellow}[r] ${text}${col.reset + col.reset}`)
-};
-exports.log = log;
 
 // Catch exit
 process.on('SIGINT', () => {
@@ -48,7 +40,10 @@ const http = require('http'),
     url = require('url'),
     { StringDecoder } = require('string_decoder'),
     config = require('./config'),
-    fs = require('fs');
+    fs = require('fs'),
+    handlers = require('./lib/handlers'),
+    etc = require('./lib/etclib');
+
 
 try {
     console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n`);
@@ -109,18 +104,21 @@ if (config.keephttpon === true) {
 
 // Start the HTTPS server
 if (config.secured === true) {
-    httpsServer.listen(config.httpsport, config.ip, () => {
-        log.success(`Server is listening on ${col.inverse}${config.ip}:${config.httpsport}${col.background.blue + col.hicolour} HTTPS`);
-    });
-    httpsServer.on('error', function () {
-        log.error('Failed to attach to the IP or port that was specified');
-        log.warn('Exiting');
-        log.warn('Stopping server...');
-        httpsServer.close();
-        log.success('Server stopped');
-        log.info('Killing process');
-        process.exit();
-    });
+    try {
+        httpsServer.listen(config.httpsport, config.ip, () => {
+            log.success(`Server is listening on ${col.inverse}${config.ip}:${config.httpsport}${col.background.blue + col.hicolour} HTTPS`);
+        });
+        httpsServer.on('error', function () {
+            log.error('Failed to attach to the IP or port that was specified');
+            log.warn('Exiting');
+            log.warn('Stopping server...');
+            httpsServer.close();
+            log.success('Server stopped');
+            log.info('Killing process');
+            process.exit();
+        });
+    } catch (e) { log.error("Issue starting HTTPS server");}
+    
 }
 
 // Instead of making http.createServer and https.createServer we can place all the code/logic from the current setup which then may be called by either one.
@@ -157,14 +155,15 @@ const logic = (req, res) => {
         const handlerReq = router[trimPath] || handlers.ohnoes; // if stat code is number, leave it as it is and if it isnt a number then define stat code as 200
 
         // Construct the object to send to the handler
-        const data = { trimPath, queryStringObj, method, headers, payload };
-        console.log(JSON.stringify(data));
+        const sPayload = etc.safePJS(payload);//make sure that the payload wont cause any errors/issues, if it does return an empty object
+        const data = { trimPath, queryStringObj, method, headers, 'payload':sPayload };
+        
 
         // Now send the req to the handler specified in the router
         handlerReq(data, function (statCode, payload, objTyp) {
             // Use the status code from the handler, or just use 200 (OK)
             statCode = typeof statCode === 'number' ? statCode : 200;
-            objTyp = typeof objTyp === 'string' ? objTyp : 'text/HTML';
+            objTyp = typeof objTyp === 'string' ? objTyp : 'application/JSON';
 
             // Use the payload from the handler or return empty obj.
             // Check if we're using JSON/didn't define the payload type then go ahead and convert the JSON/obj into a string
@@ -212,65 +211,15 @@ const logic = (req, res) => {
     });
 };
 
-/*
-    Handlers:
-        Default  - A default handler, also sent to during a 404.
-        demojson - Is the server up? Send back JSON content to test
-        demosite - Is the server up? Send back HTML content to test
-        ohnoes   - Fallback if content is not found
-        favicon  - Give that sweet browser it's icon
-        fetchLogo- Just give logo's, going to be made into a single function
-*/
-let handlers = {};
 
-
-/*Note for future development: Start using 3 callbacks
-
-1st - The code to respond with
-2nd - Payload/content
-3rd - Type (if none specified then default to JSON. By doing this we allow other payloads like HTML or other bin. content) 
-*/
-
-//Sample handler
-handlers.sample = function (data, callback) {
-    //Callback a 200 status code and a payload object for the demo
-    callback(200, { 'sample': 'json' });
-};
-//Check if the server is available
-handlers.up = function (data, callback) {
-    if (data.headers['status'] === 'na') {
-        callback(200, { 'ImGood': 'ThanksForAsking uwu' });
-    } else if (data.headers['headers.status'] === 'na') {
-        callback(200, { 'ImGood': 'ThanksForAsking uwu' });
-    } else {
-        callback(204);
-    }
-};
-handlers.demosite = function (data, callback) {
-    //Send a demo website
-    callback(200, "<body><h1>test</h1></body>", "application/HTML");
-};
-handlers.best = function (data, callback) {
-    callback(200, "<head><link href='https://fonts.googleapis.com/css?family=Major+Mono+Display' rel='stylesheet'></head><body><style>body, html, h1 {font-family: 'Major Mono Display', monospace;}; h3{font-family: 'Major Mono Display', monospace; font-size: 24px}</style><h1>Mar is a cutie</h1><h3>❤</h3></body", 'application/HTML');
-};
-//Handler not found
-handlers.ohnoes = function (data, callback) {
-    callback(404, { status: 404, error: "NOFOUND-1", desc: "The requested content does not exist." }, "application/JSON");
-};
-//Empty 202 response
-handlers.ohnoes = function (data, callback) {
-    callback(200);
-};
-//Favicon handler
-handlers.favicon = function (data, callback) {
-    callback(200, fs.readFileSync('Resources/DrutLounge.logo.ico'), "image/vnd.microsoft.icon");
-};
 //A cool router
 var router = {
+    "up": handlers.up,
     "sample": handlers.sample,
     "best": handlers.best,
     "demosite": handlers.demosite,
-    "up": handlers.up,
     "ping": handlers.ping,
+    "user": handlers.user,
+    "auth": handlers.accesstoken,
     "favicon.ico": handlers.favicon
 };

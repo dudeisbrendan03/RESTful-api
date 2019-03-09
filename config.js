@@ -23,7 +23,11 @@ const environments = {
         secured: false, // doesn't need to be secured in local development
         keephttpon: true,
         certloc: './https/cert.pem',
-        keyloc: './https/key.pem'
+        keyloc: './https/key.pem',
+        favicon: './resouces/favicon.ico',
+        hashSecret: 'a',//Has no effect while utilizing SHA256
+        tokenLength: 32, //The length of provisioned tokens
+        tokenTime: 60 //Time (in minutes) until a token expires
     },
 
     // Default production configuration.
@@ -35,8 +39,12 @@ const environments = {
         secured: true,
         keephttpon: true,
         certloc: './https/cert.pem',
-        keyloc: './https/key.pem'
-    }
+        keyloc: './https/key.pem',
+        favicon: './resouces/favicon.ico',
+        hashSecret: 'a',
+        tokenLength: 32,
+        tokenTime: 60
+    },
 
     // Custom configurations go here.
 };

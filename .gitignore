@@ -68,3 +68,8 @@ https/
 
 package.json
 *.njsproj*
+
+# generated users+tokens
+.tdat/users/*@*.json
+.tdat/actk/*.json
+bin/Microsoft.NodejsTools.WebRole.dll
