@@ -38,7 +38,7 @@ describe('Task API Routes', function() {
     describe('/user - create, fail create, get', function() {
         // create user successfuly
         it('POST /user', function(done) {
-            var task = global.object.first();
+            var task = global.object[0];
             request.post('/user')
                 .send(task)
                 .expect(204)
@@ -60,7 +60,7 @@ describe('Task API Routes', function() {
         
         // Testing the status 404 for task not found
         it('GET /user - get info', function(done) {
-            var task = global.object.first();
+            var task = global.object[0];
             request.post(`/user/?email=${task.email}`)
                 .expect(200, {
             "fName":"demo",
@@ -78,7 +78,7 @@ describe('Task API Routes', function() {
     // Test tokens
     describe('/auth - create, get, delete', function() {
         it('POST /auth - create token', function(done) {
-            var task = global.object.last();
+            var task = global.object[1];
             request.put('/user')
                 .send(task)
                 .expect(200)
@@ -91,7 +91,7 @@ describe('Task API Routes', function() {
         });
 
         before(function(done) {
-            var task = global.object.last();
+            var task = global.object[1];
             request.post('/auth')
                 .send(task)
                 .end(function(err, res) {
@@ -126,7 +126,7 @@ describe('Task API Routes', function() {
 
     describe('Delete user', function() {
         it('DELETE /user', function(done) {
-            var task = global.object.first();
+            var task = global.object[0];
             request.delete('/user/?email=' + task.email)
                 .expect(204)
                 .end(function(err, res) {
