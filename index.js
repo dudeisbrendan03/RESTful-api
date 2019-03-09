@@ -6,10 +6,11 @@
  */
 
 
-//Import logging
-const log = require('./lib/logging');
-//Import console colours
-const col = require('./lib/colours');
+//Import logging, version checker and colours prior to everything else
+const log = require('./lib/logging'),
+    verCheck = require('./lib/versionChecker'),
+    col = require('./lib/colours');
+
 let exitVal = 0;
 
 
@@ -43,7 +44,6 @@ const http = require('http'),
     { StringDecoder } = require('string_decoder'),
     config = require('./config'),
     fs = require('fs'),
-    verCheck = require('./lib/versionChecker'),
     handlers = require('./lib/handlers'),
     etc = require('./lib/etclib');
 
