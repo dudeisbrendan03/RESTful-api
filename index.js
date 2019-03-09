@@ -5,12 +5,6 @@
  * 
  */
 
-//File store during testing
-const storage = require('lowdb/file-sync');  
-app.db = lowdb('db.json', {  
-    storage: storage
-});
-
 // Console colours.
 const col = require('./lib/colours.js');
 let exitVal = 0;
