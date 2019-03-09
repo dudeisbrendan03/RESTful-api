@@ -86,14 +86,13 @@ describe('Task API Routes', function() {
         });
 
         before(function(done) {
-            request(url)
-            .post('/auth')
             var task = app.db('tasks').last();
-            .send(task)
-            .end(function(err, res) {
-                token = res.body.token;
-                done();
-            });
+            request.post('/auth')
+                .send(task)
+                .end(function(err, res) {
+                    token = res.body.token;
+                    done();
+                });
         });
 
         it('GET /auth - test token', function(done) {
