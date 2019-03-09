@@ -5,13 +5,7 @@ var app = require('../../index.js');
 global.app = app;
 global.expect = chai.expect;  
 global.request = supertest(app);  
-
-
-describe('Task API Routes', function() {  
-    // This function will run before every test to clear database
-    beforeEach(function(done) {
-        app.db.object = {};
-        app.db.object.tasks = [{
+global.object = [{
             "fName":"demo",
             "lName":"rest",
             "password":"@ASDA3gah45",
@@ -22,7 +16,9 @@ describe('Task API Routes', function() {
             "email":"asd@asd.nasd",
             "password":"@ASDA3gah45"
         }];
-        app.db.write();
+
+describe('Task API Routes', function() {  
+    beforeEach(function(done) {
         done();
     });
 
@@ -42,7 +38,7 @@ describe('Task API Routes', function() {
     describe('/user - create, fail create, get', function() {
         // create user successfuly
         it('POST /user', function(done) {
-            var task = app.db('tasks').first();
+            var task = global.object.first();
             request.post('/user')
                 .send(task)
                 .expect(204)
@@ -64,7 +60,7 @@ describe('Task API Routes', function() {
         
         // Testing the status 404 for task not found
         it('GET /user - get info', function(done) {
-            var task = app.db('tasks').first();
+            var task = global.object.first();
             request.post(`/user/?email=${task.email}`)
                 .expect(200, {
             "fName":"demo",
@@ -82,7 +78,7 @@ describe('Task API Routes', function() {
     // Test tokens
     describe('/auth - create, get, delete', function() {
         it('POST /auth - create token', function(done) {
-            var task = app.db('tasks').last();
+            var task = global.object.last();
             request.put('/user')
                 .send(task)
                 .expect(200)
@@ -95,7 +91,7 @@ describe('Task API Routes', function() {
         });
 
         before(function(done) {
-            var task = app.db('tasks').last();
+            var task = global.object.last();
             request.post('/auth')
                 .send(task)
                 .end(function(err, res) {
@@ -118,7 +114,6 @@ describe('Task API Routes', function() {
         });
 
         it('DELETE /token', function(done) {
-            var task = app.db('tasks').first();
             request.delete('/auth/?token=' + token)
                 .expect(204)
                 .end(function(err, res) {
@@ -131,8 +126,8 @@ describe('Task API Routes', function() {
 
     describe('Delete user', function() {
         it('DELETE /user', function(done) {
-            var task = app.db('tasks').first();
-            request.delete('/user/' + task.id)
+            var task = global.object.first();
+            request.delete('/user/?email=' + task.email)
                 .expect(204)
                 .end(function(err, res) {
                     done(err);
