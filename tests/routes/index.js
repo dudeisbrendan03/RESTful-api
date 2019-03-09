@@ -60,11 +60,10 @@ describe('Task API Routes', function() {
                 .expect(200, {
             "fName":"demo",
             "lName":"rest",
-            "password":"@ASDA3gah45",
             "tos":true,
             "mobile":"+441298751835",
             "email":"asd@asd.nasd"
-        }
+                })
                 .end(function(err, res) {
                     done(err);
                 });
