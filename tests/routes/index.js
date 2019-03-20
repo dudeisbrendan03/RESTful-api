@@ -53,8 +53,9 @@ describe('Check API routes', function() {
             request.post('/user')
                 .send(task)
                 .expect(400)
-                .end(function(err, res) {
-                    done(err+" [fail creation test]");
+                .end(function (err, res) {
+                    if (err) { err = +" [fail creation test]";};
+                    done(err);
                 });
         });
         
@@ -69,8 +70,9 @@ describe('Check API routes', function() {
             "mobile":"+441298751835",
             "email":"asd@asd.nasd"
                 })
-                .end(function(err, res) {
-                    done(err+" [get user info test]");
+                .end(function (err, res) {
+                    if (err) { err = +" [get user info test]";}
+                    done(err);
                 });
         });
     });
@@ -86,7 +88,8 @@ describe('Check API routes', function() {
                     expect(function(res){
                         if (!('token' in res.body)) throw new Error("No token");
                     });
-                    done(err+" [create token test]");
+                    if (err) { err = +" [create token test]";}
+                    done(err);
                 });
         });
 
@@ -109,15 +112,17 @@ describe('Check API routes', function() {
                         if (!('email' in res.body)) throw new Error("No email");
                         if (!('expires' in res.body)) throw new Error("No expires");
                     });
-                    done(err+" [get token info test]");
+                    if (err) { err = +" [get token info test]";}
+                    done(err);
                 });
         });
 
         it('(DELETE /token)', function(done) {
             request.delete('/auth/?token=' + token)
                 .expect(204)
-                .end(function(err, res) {
-                    done(err+" [delete token test]");
+                .end(function (err, res) {
+                    if (err) { err = +" [delete token test]";}
+                    done(err);
                 });
         });
     });
@@ -128,8 +133,9 @@ describe('Check API routes', function() {
             var task = global.object[0];
             request.delete('/user/?email=' + task.email)
                 .expect(204)
-                .end(function(err, res) {
-                    done(err+" [delete user test]");
+                .end(function (err, res) {
+                    if (err) { err = +" [delete user test]";}
+                    done(err);
                 });
         });
 
