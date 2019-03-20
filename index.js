@@ -223,3 +223,5 @@ var router = {
     "auth": handlers.accesstoken,
     "favicon.ico": handlers.favicon
 };
+
+module.exports = httpServer
