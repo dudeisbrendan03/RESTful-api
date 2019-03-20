@@ -43,7 +43,7 @@ describe('Check API routes', function() {
                 .send(task)
                 .expect(204)
                 .end(function(err, res) {
-                    done(err+" [successful creation test]");
+                    done(err);
                 });
         });
 
@@ -54,7 +54,6 @@ describe('Check API routes', function() {
                 .send(task)
                 .expect(400)
                 .end(function (err, res) {
-                    if (err) { err = +" [fail creation test]";};
                     done(err);
                 });
         });
@@ -71,7 +70,6 @@ describe('Check API routes', function() {
             "email":"asd@asd.nasd"
                 })
                 .end(function (err, res) {
-                    if (err) { err = +" [get user info test]";}
                     done(err);
                 });
         });
@@ -86,9 +84,7 @@ describe('Check API routes', function() {
                 .expect(200)
                 .end(function(err, res) {
                     expect(function(res){
-                        if (!('token' in res.body)) throw new Error("No token");
                     });
-                    if (err) { err = +" [create token test]";}
                     done(err);
                 });
         });
@@ -112,7 +108,6 @@ describe('Check API routes', function() {
                         if (!('email' in res.body)) throw new Error("No email");
                         if (!('expires' in res.body)) throw new Error("No expires");
                     });
-                    if (err) { err = +" [get token info test]";}
                     done(err);
                 });
         });
@@ -121,10 +116,9 @@ describe('Check API routes', function() {
             request.delete('/auth/?token=' + token)
                 .expect(204)
                 .end(function (err, res) {
-                    if (err) { err = +" [delete token test]";}
                     done(err);
                 });
-        });
+        }); 
     });
 
     //delete user
@@ -134,7 +128,6 @@ describe('Check API routes', function() {
             request.delete('/user/?email=' + task.email)
                 .expect(204)
                 .end(function (err, res) {
-                    if (err) { err = +" [delete user test]";}
                     done(err);
                 });
         });
