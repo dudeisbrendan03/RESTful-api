@@ -8,13 +8,13 @@ global.request = supertest(app);
 global.object = [{
             "fName":"demo",
             "lName":"rest",
-            "password":"@ASDA3gah45",
+            "pass":"@ASDA3gah45",
             "tos":true,
             "mobile":"+441298751835",
             "email":"asd@asd.nasd"
         }, {
             "email":"asd@asd.nasd",
-            "password":"@ASDA3gah45"
+            "pass":"@ASDA3gah45"
         }];
 
 describe('Check API routes', function() {  
@@ -34,6 +34,7 @@ describe('Check API routes', function() {
     describe(' - /user - create, get', function() {
         // create user successfuly
         it('(POST /user)', function(done) {
+	    //console.log(global.object[0]);
             var task = global.object[0];
             request.post('/user')
                 .send(task)
@@ -44,20 +45,20 @@ describe('Check API routes', function() {
         });
 
         // fail creating user due to missing data
-        //it('(POST /user) [fail]', function(done) {
-         //   var task = {"fName":"demo","lName":"rest", "password":"3gah45","tos":false, "mobile":"+441298751835","email":"asd@asd.nasd"};
-        //    request.post('/user')
-          //      .send(task)
-         //       .expect(400)
-        //        .end(function (err, res) {
-          //          done(err);
-         //       });
-        //});
+        it('(POST /user) [fail]', function(done) {
+            var task = {"fName":"demo","lName":"rest", "pass":"3gah45","tos":false, "mobile":"+441298751835","email":"asd@asd.nasd"};
+            request.post('/user')
+                .send(task)
+                .expect(400)
+                .end(function (err, res) {
+                    done(err);
+                });
+        });
         
         // Testing the status 404 for task not found
         it('(GET /user) [info]', function(done) {
             var task = global.object[0];
-            request.post(`/user/?email=${task.email}`)
+            request.get(`/user/?email=${task.email}`)
                 .expect(200, {
             "fName":"demo",
             "lName":"rest",
