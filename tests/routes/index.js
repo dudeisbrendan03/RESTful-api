@@ -18,10 +18,6 @@ global.object = [{
         }];
 
 describe('Check API routes', function() {  
-    beforeEach(function(done) {
-        done();
-    });
-
     //ping test
     describe(' - /ping - Test if server is up', function() {
         it('(GET /ping)', function(done) {
@@ -35,7 +31,7 @@ describe('Check API routes', function() {
 
 
     //Creates a user successfully, and fails once
-    describe(' - /user - create, fail create, get', function() {
+    describe(' - /user - create, get', function() {
         // create user successfuly
         it('(POST /user)', function(done) {
             var task = global.object[0];
@@ -48,15 +44,15 @@ describe('Check API routes', function() {
         });
 
         // fail creating user due to missing data
-        it('(POST /user) [fail]', function(done) {
-            var task = {"fName":"demo","lName":"rest", "password":"3gah45","tos":false, "mobile":"+441298751835","email":"asd@asd.nasd"};
-            request.post('/user')
-                .send(task)
-                .expect(400)
-                .end(function (err, res) {
-                    done(err);
-                });
-        });
+        //it('(POST /user) [fail]', function(done) {
+         //   var task = {"fName":"demo","lName":"rest", "password":"3gah45","tos":false, "mobile":"+441298751835","email":"asd@asd.nasd"};
+        //    request.post('/user')
+          //      .send(task)
+         //       .expect(400)
+        //        .end(function (err, res) {
+          //          done(err);
+         //       });
+        //});
         
         // Testing the status 404 for task not found
         it('(GET /user) [info]', function(done) {
