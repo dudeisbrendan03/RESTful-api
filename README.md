@@ -1,5 +1,6 @@
-*Currently pretty inefficient*
-
+*Currently pretty inefficient/insecure*
+v0.1.163
+[Get the docs](https://restfulapi13.docs.apiary.io/#)
 
 # Another RESTful API
 
