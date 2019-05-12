@@ -1,0 +1,44 @@
+FORMAT: 1A
+HOST: https://api.thatspretty.cool/
+
+# restful-api
+
+A simple authentication API.
+You should **NOT** put any personal information on to the API and we are not responsible for any of the data you place on it.
+
+## User Management Collection [/user]
+
+### Create a user [POST]
+
+You may create a new user using this action.
+
+Your user will only be created if:
+- First, last names, email, password and mobile number are strings
+- ToS is true
+- Email contains an '@'
+- Name doesn't contain the following: !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?
+- Password contains the following: !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? and is longer than 8 characters
+
++ Request (application/json)
+
+        {
+            "fName": "Test",
+            "lName": "User",
+            "email": "asd@asd.net",
+            "pass": "1234567@abcdef",
+            "tos": true,
+            "mobile": "+441241365123"
+        }
+
++ Response 204 (application/json)
+
+### Fetch user details [GET]
+
+Grab a users details (does not currently have any authentication implemented
+
++ Request (application/json)
+
+    + Query
+    
+    
++ Response 200 (application/json)
