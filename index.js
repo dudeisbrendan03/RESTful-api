@@ -42,18 +42,47 @@ const http = require('http'),
     config = require('./config'),
     fs = require('fs'),
     handlers = require('./lib/handlers'),
-    etc = require('./lib/etclib');
+    etc = require('./lib/etclib'),
+    _data = require('./lib/dataHandler');
 
 
 try {
     console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n`);
 } catch (e) {
-    console.error('Unknown version')
+    console.error('Unknown version');
 }
 if (config.ip === '0.0.0.0')
     log.warn('You are running on all available IPs. This is considered bad practice and possibly dangerous, make sure you have double checked your config.');
 else if (config.ip === '127.0.0.1')
     log.info('Running at localhost, the server will not be able to be access by other devices without tunneling.');
+
+if (config.clearTokens) {
+    log.warn("Going to remove expired tokens");
+    var tkList = [];
+    etc.tokens(function (tkList) {
+        console.log(tkList+"  4");
+        console.log(JSON.stringify(tkList) + "2");
+        if (tkList) {
+            tkList.forEach(function (tk) {
+                console.log(tk + "12");
+                var tmp = etc.isValid(tk);
+                console.log(tmp);
+                if (!tmp) {
+                    _data.delete('actk', tk, function (err) {
+                        if (!err) {
+                            log.info(tk + " removed");
+                        } else {
+                            log.warn(tk + " could not be properly invalidated/unlinked");
+                        }
+                    });
+                }
+            });
+        } else {
+            log.warn("Couldn't attempt token removal");
+        }
+    });
+    
+}
 
 // Check if HTTP and HTTPS are disabled
 if (config.secured === false && config.keephttpon === false) {
