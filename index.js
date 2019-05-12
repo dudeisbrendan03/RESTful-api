@@ -60,13 +60,9 @@ if (config.clearTokens) {
     log.warn("Going to remove expired tokens");
     var tkList = [];
     etc.tokens(function (tkList) {
-        console.log(tkList+"  4");
-        console.log(JSON.stringify(tkList) + "2");
         if (tkList) {
             tkList.forEach(function (tk) {
-                console.log(tk + "12");
                 var tmp = etc.isValid(tk);
-                console.log(tmp);
                 if (!tmp) {
                     _data.delete('actk', tk, function (err) {
                         if (!err) {
