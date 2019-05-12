@@ -1,4 +1,4 @@
-// Returns the config for a specific environment.
+ // Returns the config for a specific environment.
 
 /*
     settings:
@@ -27,7 +27,8 @@ const environments = {
         favicon: './resouces/favicon.ico',
         hashSecret: 'a',//Has no effect while utilizing SHA256
         tokenLength: 32, //The length of provisioned tokens
-        tokenTime: 60 //Time (in minutes) until a token expires
+        tokenTime: 60, //Time (in minutes) until a token expires
+        clearTokens: true //Remove old tokens on boot
     },
 
     // Default production configuration.
@@ -43,7 +44,8 @@ const environments = {
         favicon: './resouces/favicon.ico',
         hashSecret: 'a',
         tokenLength: 32,
-        tokenTime: 60
+        tokenTime: 60,
+        clearTokens: true //Remove old tokens on boot
     },
 
     // Custom configurations go here.
