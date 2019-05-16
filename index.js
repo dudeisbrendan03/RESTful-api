@@ -42,18 +42,43 @@ const http = require('http'),
     config = require('./config'),
     fs = require('fs'),
     handlers = require('./lib/handlers'),
-    etc = require('./lib/etclib');
+    etc = require('./lib/etclib'),
+    _data = require('./lib/dataHandler');
 
 
 try {
-    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n`);
+    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.1.176\n`);
 } catch (e) {
-    console.error('Unknown version')
+    console.error('Unknown version');
 }
 if (config.ip === '0.0.0.0')
     log.warn('You are running on all available IPs. This is considered bad practice and possibly dangerous, make sure you have double checked your config.');
 else if (config.ip === '127.0.0.1')
     log.info('Running at localhost, the server will not be able to be access by other devices without tunneling.');
+
+if (config.clearTokens) {
+    log.warn("Going to remove expired tokens");
+    var tkList = [];
+    etc.tokens(function (tkList) {
+        if (tkList) {
+            tkList.forEach(function (tk) {
+                var tmp = etc.isValid(tk);
+                if (!tmp) {
+                    _data.delete('actk', tk, function (err) {
+                        if (!err) {
+                            log.info(tk + " removed");
+                        } else {
+                            log.warn(tk + " could not be properly invalidated/unlinked");
+                        }
+                    });
+                }
+            });
+        } else {
+            log.warn("Couldn't attempt token removal");
+        }
+    });
+    
+}
 
 // Check if HTTP and HTTPS are disabled
 if (config.secured === false && config.keephttpon === false) {
@@ -179,7 +204,7 @@ const logic = (req, res) => {
             } else payloadStr = String(payload);
 
             // Respond to the req
-            res.setHeader('Content-Type', objTyp);
+            if (statCode !== 204) { res.setHeader('Content-Type', objTyp); }
             res.setHeader('status', 'good');
             res.writeHead(statCode);
             res.end(payloadStr);
@@ -223,3 +248,5 @@ var router = {
     "auth": handlers.accesstoken,
     "favicon.ico": handlers.favicon
 };
+
+module.exports = httpServer;
