@@ -49,10 +49,10 @@ const environments = {
     },
 
     // Just clear tokens
-    tokClear: {//This will JUST execute the token clearing function. Server will not start and this is safe to run WHILE the server is running or not.
+    tokclear: {//This will JUST execute the token clearing function. Server will not start and this is safe to run WHILE the server is running or not.
         httpport: 0,
         httpsport: 0,
-        env: 'tokClear',
+        env: 'tokclear',
         ip: '0',
         secured: false,
         keephttpon: false,
