@@ -56,24 +56,24 @@ describe('Check API routes', function() {
         });
         
         // Testing the status 404 for task not found
-        it('(GET /user) [info]', function(done) {
-            var task = global.object[0];
-            request.get(`/user/?email=${task.email}`)
-                .expect(200, {
-            "fName":"demo",
-            "lName":"rest",
-            "tos":true,
-            "mobile":"+441298751835",
-            "email":"asd@asd.nasd"
-                })
-                .end(function (err, res) {
-                    done(err);
-                });
-        });
+        //it('(GET /user) [info]', function(done) {
+        //    var task = global.object[0];
+         //   request.get(`/user/?email=${task.email}`)
+         //       .expect(200, {
+         //   "fName":"demo",
+         //   "lName":"rest",
+        //    "tos":true,
+        //    "mobile":"+441298751835",
+        //    "email":"asd@asd.nasd"
+        //        })
+        //        .end(function (err, res) {
+        //            done(err);
+        //        });
+        //});
     });
 
     // Test tokens
-    describe(' - /auth - create, get, delete', function() {
+    /*describe(' - /auth - create, get, delete', function() {
         it('(POST /auth) [create]', function(done) {
             var task = global.object[1];
             request.put('/auth')
@@ -116,7 +116,7 @@ describe('Check API routes', function() {
                     done(err);
                 });
         }); 
-    });
+    });*/
 
     //delete user
     describe(' - Delete user', function() {
