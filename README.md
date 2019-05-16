@@ -9,6 +9,9 @@ A Node.JS based API that also functions as content delivery. It's main purpose i
 
 This is going to be used for an application I'm currently making.
 
+## Setup
+[View deployment instructions](https://github.com/dudeisbrendan/RESTful-api/blob/master/DEPLOY.md)
+
 ## Usage
 The application can be launched in multiple environment modes (this is still a WIP, going to introduce features into each environment like security features etc)
 
@@ -18,8 +21,12 @@ Using an environment:
 The current env-name's in the project are:
 - production (123.456.789.012:80/443)
 - staging (0.0.0.0:8080/8081)
+- tokClear (clears expired tokens)
 
-If there is no environment defined when starting the application then it defaults to staging
+If there is no environment defined when starting the application then it defaults to staging.
+
+To clear expired tokens while the server is running run:
+`NODE_ENV=tokClear node .`
 
 ## Dependancies
 None(ish)!
