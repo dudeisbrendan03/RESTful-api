@@ -204,7 +204,7 @@ const logic = (req, res) => {
             } else payloadStr = String(payload);
 
             // Respond to the req
-            res.setHeader('Content-Type', objTyp);
+            if (statCode !== 204) { res.setHeader('Content-Type', objTyp); }
             res.setHeader('status', 'good');
             res.writeHead(statCode);
             res.end(payloadStr);
