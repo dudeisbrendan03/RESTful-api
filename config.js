@@ -48,6 +48,23 @@ const environments = {
         clearTokens: true //Remove old tokens on boot
     },
 
+    // Just clear tokens
+    tokClear: {//This will JUST execute the token clearing function. Server will not start and this is safe to run WHILE the server is running or not.
+        httpport: 0,
+        httpsport: 0,
+        env: 'tokClear',
+        ip: '0',
+        secured: false,
+        keephttpon: false,
+        certloc: '',
+        keyloc: '',
+        favicon: '',
+        hashSecret: '',
+        tokenLength: 0,
+        tokenTime: 0,
+        clearTokens: true
+    },
+
     // Custom configurations go here.
 };
 
