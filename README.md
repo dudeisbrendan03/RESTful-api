@@ -1,7 +1,11 @@
 *Currently pretty inefficient/insecure*
 v0.1.176
+
+
 [Get the docs](https://restfulapi13.docs.apiary.io/#)
+
 [Check DevOps](https://dev.azure.com/TPCOfficial/RESTful-api/_workitems/recentlyupdated/)
+
 # Another RESTful API
 
 ## What is this
@@ -10,7 +14,7 @@ A Node.JS based API that also functions as content delivery. It's main purpose i
 This is going to be used for an application I'm currently making.
 
 ## Setup
-[View deployment instructions](https://github.com/dudeisbrendan/RESTful-api/blob/master/DEPLOY.md)
+[View deployment instructions](https://github.com/dudeisbrendan03/RESTful-api/blob/master/DEPLOY.md)
 
 ## Usage
 The application can be launched in multiple environment modes (this is still a WIP, going to introduce features into each environment like security features etc)
