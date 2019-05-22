@@ -1,6 +1,10 @@
 *Currently pretty inefficient/insecure*
 devrepover
+
+
 [Get the docs](https://restfulapi13.docs.apiary.io/#)
+
+[Check DevOps](https://dev.azure.com/TPCOfficial/RESTful-api/_workitems/recentlyupdated/)
 
 # Another RESTful API
 
@@ -10,7 +14,7 @@ A Node.JS based API that also functions as content delivery. It's main purpose i
 This is going to be used for an application I'm currently making.
 
 ## Setup
-[View deployment instructions](https://github.com/dudeisbrendan/RESTful-api/blob/master/DEPLOY.md)
+[View deployment instructions](https://github.com/dudeisbrendan03/RESTful-api/blob/master/DEPLOY.md)
 
 ## Usage
 The application can be launched in multiple environment modes (this is still a WIP, going to introduce features into each environment like security features etc)
@@ -31,11 +35,12 @@ To clear expired tokens while the server is running run:
 ## Dependancies
 None(ish)!
 
-I have no imports, no need for a package.json or any dependacy management. But this *DOES* require Node 8.15.*
+I have no imports, no need for a package.json or any dependacy management. But this *DOES* require Node 8.*.
 
 ## To-do
 - Logging
 - Change how the console displays requests and content
+- Actually build the authentication part of the API, at the minute it may only deliver content (poorly) and make some simple RESTful requests. I haven't actually put mutch into the API yet.
 
 ### Credits
 [Credits file](https://github.com/dudeisbrendan/RESTful-api/blob/master/CREDIT.md)
