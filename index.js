@@ -47,7 +47,7 @@ const http = require('http'),
 
 
 try {
-    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.1.176\n`);
+    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n devrepover\n`);
 } catch (e) {
     console.error('Unknown version');
 }
@@ -62,16 +62,18 @@ if (config.clearTokens) {
     etc.tokens(function (tkList) {
         if (tkList) {
             tkList.forEach(function (tk) {
-                var tmp = etc.isValid(tk);
-                if (!tmp) {
-                    _data.delete('actk', tk, function (err) {
-                        if (!err) {
-                            log.info(tk + " removed");
-                        } else {
-                            log.warn(tk + " could not be properly invalidated/unlinked");
-                        }
-                    });
-                }
+                etc.isValid(tk, function (tmp) {
+                    console.log(tmp + "is recieved validity value");
+                    if (!tmp) {
+                        _data.delete('actk', tk, function (err) {
+                            if (!err) {
+                                log.info(tk + " removed");
+                            } else {
+                                log.warn(tk + " could not be properly invalidated/unlinked");
+                            }
+                        });
+                    }
+                });
             });
         } else {
             log.warn("Couldn't attempt token removal");
