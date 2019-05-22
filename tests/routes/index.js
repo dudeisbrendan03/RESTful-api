@@ -34,7 +34,7 @@ describe('Check API routes', function() {
     describe(' - /user - create, get', function() {
         // create user successfuly
         it('(POST /user)', function(done) {
-	    //console.log(global.object[0]);
+        //console.log(global.object[0]);
             var task = global.object[0];
             request.post('/user')
                 .send(task)
@@ -131,8 +131,8 @@ describe('Check API routes', function() {
         });
 
         it('(DELETE /user)', function(done) {
-            var task = { "email": "asd@asd.nasd", "pass": "@ASDA3gah45", "token": global.token };
-            request.delete('/user/?email=' + task.email)
+            const task = { "email": "asd@asd.nasd", "pass": "@ASDA3gah45", "token": global.token };
+            request.delete('/user/?email=' + task.email +'&token=' + task.token)
                 .expect(204)
                 .end(function (err, res) {
                     done(err);
