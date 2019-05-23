@@ -28,8 +28,8 @@ steps:
   inputs:
     command: install
 
-- script: npm audit --json > audit.json & exit 0
-  displayName: 'NPM Security Audit'
+#- script: npm audit --json > audit.json & exit 0
+#  displayName: 'NPM Security Audit'
   
 - task: Npm@1
   displayName: 'npm test'
