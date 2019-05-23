@@ -54,7 +54,7 @@ try {
 if (config.ip === '0.0.0.0')
     log.warn('You are running on all available IPs. This is considered bad practice and possibly dangerous, make sure you have double checked your config.');
 else if (config.ip === '127.0.0.1')
-    log.info('Running at localhost, the server will not be able to be access by other devices without tunneling.');
+    log.info('Running at localhost, the server will not be able to be accessed by other devices without tunneling.');
 
 if (config.clearTokens) {
     log.warn("Going to remove expired tokens");
@@ -63,7 +63,6 @@ if (config.clearTokens) {
         if (tkList) {
             tkList.forEach(function (tk) {
                 etc.isValid(tk, function (tmp) {
-                    console.log(tmp + "is recieved validity value");
                     if (!tmp) {
                         _data.delete('actk', tk, function (err) {
                             if (!err) {
@@ -91,7 +90,7 @@ if (config.secured === false && config.keephttpon === false) {
 
 // Date/time
 const date = new Date(),
-    rdate = date + date.getHours();
+    rdate = date;
 
 
 // HTTP Server
@@ -183,8 +182,18 @@ const logic = (req, res) => {
 
         // Construct the object to send to the handler
         const sPayload = etc.safePJS(payload);//make sure that the payload wont cause any errors/issues, if it does return an empty object
-        const data = { trimPath, queryStringObj, method, headers, 'payload':sPayload };
-        
+        const data = { trimPath, queryStringObj, method, headers, 'payload': sPayload };
+
+        // Log the req path
+        log.request([
+            'Request received:',
+            `  Path: '${trimPath}'`,
+            `  Method: ${method.toUpperCase()}`,
+            `  Query: ${JSON.stringify(queryStringObj)}`,
+            `  Headers: ${JSON.stringify(headers)}`,
+            `  Payload: ${payload}`,
+            `  Time: ${new Date()}`
+        ].join('\n'));
 
         // Now send the req to the handler specified in the router
         handlerReq(data, function (statCode, payload, objTyp) {
@@ -223,18 +232,6 @@ const logic = (req, res) => {
 
         // Now the request has finished we want to go back to what we were doing before
 
-
-        // Log the req path
-
-        log.request([
-            'Request received:',
-            `  Path: '${trimPath}'`,
-            `  Method: ${method.toUpperCase()}`,
-            `  Query: ${JSON.stringify(queryStringObj)}`,
-            `  Headers: ${JSON.stringify(headers)}`,
-            `  Payload: ${payload}`,
-            `  Time: ${new Date() + date.getHours()}`
-        ].join('\n'));
     });
 };
 
