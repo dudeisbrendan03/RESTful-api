@@ -10,11 +10,12 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-- task: PowerShell@2
-  displayName: 'Get testing pkg'
-  inputs:
-    targetType: inline
-    script: "wget https://raw.githubusercontent.com/dudeisbrendan03/RESTful-api/dev/package.json"
+# Testing package is already on dev branch
+#- task: PowerShell@2
+#  displayName: 'Get testing pkg'
+#  inputs:
+#    targetType: inline
+#    script: "wget https://raw.githubusercontent.com/dudeisbrendan03/RESTful-api/dev/package.json"
 
 - task: NodeTool@0
   displayName: 'Trivy'
