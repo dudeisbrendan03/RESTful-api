@@ -10,11 +10,15 @@ pool:
   vmImage: 'Ubuntu-16.04'
 
 steps:
-- task: PowerShell@2
-  inputs:
-    targetType: inline
-    script: "wget https://raw.githubusercontent.com/dudeisbrendan03/RESTful-api/dev/package.json"
+# Testing package is already on dev branch
+#- task: PowerShell@2
+#  displayName: 'Get testing pkg'
+#  inputs:
+#    targetType: inline
+#    script: "wget https://raw.githubusercontent.com/dudeisbrendan03/RESTful-api/dev/package.json"
 
+- task: NodeTool@0
+  displayName: 'install node'
 - task: NodeTool@0
   inputs:
     versionSpec: '8.15'
@@ -24,6 +28,9 @@ steps:
   inputs:
     command: install
 
+- script: npm audit --json > audit.json & exit 0
+  displayName: 'NPM Security Audit'
+  
 - task: Npm@1
   displayName: 'npm test'
   inputs:
