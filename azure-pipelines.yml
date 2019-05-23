@@ -16,7 +16,7 @@ steps:
     targetType: inline
     script: "wget https://raw.githubusercontent.com/dudeisbrendan03/RESTful-api/dev/package.json"
 
-- task: ShellScript@2
+- task: NodeTool@0
   displayName: 'Trivy'
 - task: NodeTool@0
   inputs:
