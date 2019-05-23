@@ -18,7 +18,7 @@ steps:
 #    script: "wget https://raw.githubusercontent.com/dudeisbrendan03/RESTful-api/dev/package.json"
 
 - task: NodeTool@0
-  displayName: 'Trivy'
+  displayName: 'install node'
 - task: NodeTool@0
   inputs:
     versionSpec: '8.15'
