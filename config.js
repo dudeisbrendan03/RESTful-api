@@ -29,7 +29,8 @@ const environments = {
         tokenLength: 32, //The length of provisioned tokens
         tokenTime: 60, //Time (in minutes) until a token expires
         clearTokens: true, //Remove old tokens on boot
-        timeZoneHours: 1//Hours to add to token and API timing to resolve timezone issues
+        timeZoneHours: 1,//Hours to add to token and API timing to resolve timezone issues
+        aesEnabled: false //Turns Encryption on for user data
     },
 
     // Default production configuration.
@@ -47,7 +48,8 @@ const environments = {
         tokenLength: 32,
         tokenTime: 60,
         clearTokens: true,
-        timeZoneHours: 1
+        timeZoneHours: 1,
+        aesEnabled: false
     },
 
     // Just clear tokens
@@ -65,7 +67,8 @@ const environments = {
         tokenLength: 0,
         tokenTime: 0,
         clearTokens: true,
-        timeZoneHours: 1//This is THE ONLY settings that should be touched in tokClear
+        timeZoneHours: 1,//This is THE ONLY settings that should be touched in tokClear
+        aesEnabled: false
     },
 
     // Custom configurations go here.
