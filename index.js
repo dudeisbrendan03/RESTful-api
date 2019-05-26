@@ -3,6 +3,10 @@
  * 
  * Configuration is in config.js
  * 
+ * 
+ * RESTful-api project
+ * 
+ * More info at: https://github.com/dudeisbrendan03/RESTful-api
  */
 
 //Import logging, version checker and colours prior to everything else
