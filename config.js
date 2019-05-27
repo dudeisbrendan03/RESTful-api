@@ -24,6 +24,7 @@ const environments = {
         keephttpon: true,
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
+        cabundleloc: '',
         favicon: './resouces/favicon.ico',
         cryptoSecret: 'a',//Has no effect while utilizing SHA256, will also be used for ciphering though. Make sure that this file is not accessible by non-SU users.
         tokenLength: 32, //The length of provisioned tokens
@@ -43,6 +44,7 @@ const environments = {
         keephttpon: true,
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
+        cabundleloc: '',
         favicon: './resouces/favicon.ico',
         cryptoSecret: 'a',
         tokenLength: 32,
@@ -62,6 +64,7 @@ const environments = {
         keephttpon: false,
         certloc: '',
         keyloc: '',
+        cabundleloc: '',
         favicon: '',
         cryptoSecret: '',
         tokenLength: 0,
