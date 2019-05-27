@@ -43,4 +43,4 @@ I have no imports, no need for a package.json or any dependacy management. But t
 - Actually build the authentication part of the API, at the minute it may only deliver content (poorly) and make some simple RESTful requests. I haven't actually put mutch into the API yet.
 
 ### Credits
-[Credits file](https://github.com/dudeisbrendan/RESTful-api/blob/master/CREDIT.md)
+[Credits file](https://github.com/dudeisbrendan/RESTful-api/blob/master/.github/CREDIT.md)
