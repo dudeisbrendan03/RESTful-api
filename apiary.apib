@@ -1,0 +1,71 @@
+FORMAT: 1A
+HOST: https://api.thatspretty.cool/
+
+# RESTful-api
+
+A simple authentication API.
+You should **NOT** put any personal information on to the API and we are not responsible for any of the data you place on it.
+
+[View the GitHub](https://github.com/dudeisbrendan03/RESTful-api)
+
+## User Management Collection [/user]
+
+### Create a user [POST]
+
+You may create a new user using this action.
+
+Your user will only be created if:
+- First, last names, email, password and mobile number are strings
+- ToS is true
+- Email contains an '@'
+- Name doesn't contain the following: !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?
+- Password contains the following: !@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/? and is longer than 8 characters
+
++ Request (application/json)
+
+        {
+            "fName": "Test",
+            "lName": "User",
+            "email": "asd@asd.net",
+            "pass": "1234567@abcdef",
+            "tos": true,
+            "mobile": "+441241365123"
+        }
+
++ Response 204 (application/json)
+
+### Fetch user details [GET]
+
+Grab a users details (does not currently have any authentication implemented
+
++ Parameters
+    + email (required, string, `asd@asd.net`)
+    
++ Response 200 (application/json)
+
+        {
+            "fName": "etst",
+            "lName": "test",
+            "mobile": "+441241365123",
+            "email": "asd@asd.net",
+            "tos": true
+        }
+
+## Token Management Collection [/auth]
+
+### Get token (login) [POST]
+
++ Request (application/json)
+
+        {
+            "email": "asd@asd.net",
+            "pass": "1234567@abcdef"
+        }
+    
++ Response 200 (application/json)
+
+        {
+            "email": "asd@asd.net",
+            "token": "",
+            "expires": 1558040417587
+        }
