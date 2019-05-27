@@ -4,12 +4,12 @@
 
 Versions of our project that will be supported with security updates.
 
-| Version | Supported          |
-| ------- | ------------------ |
-| 0.2.x   | :x:                |
-| 0.1.x   | :white_check_mark: |
-| 0.1.176 | :white_check_mark: |
-| < 0.1   | :x:                |
+| Version | Supported          | Support ends |
+| ------- | ------------------ | ------------ |
+| 0.2.x   | :white_check_mark: | 31/06/2019   |
+| 0.1.x   | :x:                |              |
+| 0.1.176 | :white_check_mark: | 31/05/2019   |
+| < 0.1   | :x:                |              |
 
 ## Reporting a Vulnerability
 
