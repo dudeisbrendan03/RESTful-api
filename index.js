@@ -51,7 +51,7 @@ const http = require('http'),
 
 
 try {
-    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.237\n`);
+    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.239\n`);
 } catch (e) {
     console.error('Unknown version');
 }
@@ -108,11 +108,23 @@ let httpsServer;
 // HTTPS Server
 try {
     if (config.cabundleloc !== '') {
-        const httpsOpts = {key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
-            cert: fs.readFileSync(config.certloc).toString('utf8'), ca: fs.readFileSync(config.cabundleloc).toString('utf8')};
+        try {
+            var httpsOpts = {
+                key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+                cert: fs.readFileSync(config.certloc).toString('utf8'), ca: fs.readFileSync(config.cabundleloc).toString('utf8')
+            };
+        } catch (e) {
+            log.error('HTTPS Error: Issue loading key, cert and CA');
+        }
     } else {
-        const httpsOpts = {key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
-            cert: fs.readFileSync(config.certloc).toString('utf8')};
+        try {
+            var httpsOpts = {
+                key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+                cert: fs.readFileSync(config.certloc).toString('utf8')
+            };
+        } catch (e) {
+            log.error('HTTPS Error: Issue loading key and cert.');
+        }
     }
 
     httpsServer = https.createServer(httpsOpts, (req, res) => config.secured ? logic(req, res) : undefined);
