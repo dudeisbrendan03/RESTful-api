@@ -109,6 +109,7 @@ let httpsServer;
 try {
     httpsServer = https.createServer({
         key: fs.readFileSync(config.keyloc).toString('utf8'),
+        secureOptions: require('constants').SSL_OP_NO_TLSv1,//TLS 1.0 disabled.
         cert: fs.readFileSync(config.certloc).toString('utf8')
     }, (req, res) => config.secured ? logic(req, res) : undefined);
 } catch (e) {
