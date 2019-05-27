@@ -51,7 +51,7 @@ const http = require('http'),
 
 
 try {
-    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.208\n`);
+    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.227\n`);
 } catch (e) {
     console.error('Unknown version');
 }
@@ -109,6 +109,7 @@ let httpsServer;
 try {
     httpsServer = https.createServer({
         key: fs.readFileSync(config.keyloc).toString('utf8'),
+        secureOptions: require('constants').SSL_OP_NO_TLSv1,//TLS 1.0 disabled.
         cert: fs.readFileSync(config.certloc).toString('utf8')
     }, (req, res) => config.secured ? logic(req, res) : undefined);
 } catch (e) {
