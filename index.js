@@ -106,13 +106,15 @@ const httpServer = http.createServer((req, res) => {
 let httpsServer;
 
 // HTTPS Server
+if (config.cabundleloc !== '') {
+    const httpsOpts = {key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+        cert: fs.readFileSync(config.certloc).toString('utf8'), ca: fs.readFileSync(config.cabundleloc).toString('utf8')};
+} else {
+    const httpsOpts = {key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+        cert: fs.readFileSync(config.certloc).toString('utf8')};
+}
 try {
-    httpsServer = https.createServer({
-        key: fs.readFileSync(config.keyloc).toString('utf8'),
-        secureOptions: require('constants').SSL_OP_NO_TLSv1,//TLS 1.0 disabled.
-        cert: fs.readFileSync(config.certloc).toString('utf8'),
-        ca: fs.readFileSync(config.cabundleloc).toString('utf8')
-    }, (req, res) => config.secured ? logic(req, res) : undefined);
+    httpsServer = https.createServer(httpsOpts, (req, res) => config.secured ? logic(req, res) : undefined);
 } catch (e) {
     log.error('HTTPS is unavailable as the certificate files are unavailable, damaged or missing.');
 }
