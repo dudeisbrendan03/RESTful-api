@@ -25,10 +25,12 @@ const environments = {
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
         favicon: './resouces/favicon.ico',
-        hashSecret: 'a',//Has no effect while utilizing SHA256
+        cryptoSecret: 'a',//Has no effect while utilizing SHA256, will also be used for ciphering though. Make sure that this file is not accessible by non-SU users.
         tokenLength: 32, //The length of provisioned tokens
         tokenTime: 60, //Time (in minutes) until a token expires
-        clearTokens: true //Remove old tokens on boot
+        clearTokens: true, //Remove old tokens on boot
+        timeZoneHours: 1,//Hours to add to token and API timing to resolve timezone issues
+        aesEnabled: false //Turns Encryption on for user data
     },
 
     // Default production configuration.
@@ -36,16 +38,18 @@ const environments = {
         httpport: 80,
         httpsport: 443,
         env: 'production',
-        ip: '123.456.789.012', // should be a public IP, not 0.0.0.0
+        ip: '123.456.789.012', // do not run on all interfaces
         secured: true,
         keephttpon: true,
         certloc: './https/cert.pem',
         keyloc: './https/key.pem',
         favicon: './resouces/favicon.ico',
-        hashSecret: 'a',
+        cryptoSecret: 'a',
         tokenLength: 32,
         tokenTime: 60,
-        clearTokens: true //Remove old tokens on boot
+        clearTokens: true,
+        timeZoneHours: 1,
+        aesEnabled: false
     },
 
     // Just clear tokens
@@ -59,10 +63,12 @@ const environments = {
         certloc: '',
         keyloc: '',
         favicon: '',
-        hashSecret: '',
+        cryptoSecret: '',
         tokenLength: 0,
         tokenTime: 0,
-        clearTokens: true
+        clearTokens: true,
+        timeZoneHours: 1,//This is THE ONLY settings that should be touched in tokClear
+        aesEnabled: false
     },
 
     // Custom configurations go here.

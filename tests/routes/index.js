@@ -14,7 +14,7 @@ global.object = [{
             "email":"asd@asd.nasd"
         }, {
             "email":"asd@asd.nasd",
-            "pass":"@ASDA3gah45"
+        "pass": "@ASDA3gah45",
         }];
 
 describe('Check API routes', function() {  
@@ -34,7 +34,7 @@ describe('Check API routes', function() {
     describe(' - /user - create, get', function() {
         // create user successfuly
         it('(POST /user)', function(done) {
-	    //console.log(global.object[0]);
+        //console.log(global.object[0]);
             var task = global.object[0];
             request.post('/user')
                 .send(task)
@@ -73,7 +73,7 @@ describe('Check API routes', function() {
     });
 
     // Test tokens
-    /*describe(' - /auth - create, get, delete', function() {
+    describe(' - /auth - create, get, delete', function() {
         it('(POST /auth) [create]', function(done) {
             var task = global.object[1];
             request.put('/auth')
@@ -91,13 +91,13 @@ describe('Check API routes', function() {
             request.post('/auth')
                 .send(task)
                 .end(function(err, res) {
-                    token = res.body.token;
+                    global.temptoken = res.body.token;
                     done();
                 });
         });
 
         it('(GET /auth) - test token', function(done) {
-            request.get('/auth?token='+token)
+            request.get('/auth?token=' + global.temptoken)
                 .expect(200)
                 .end(function(err, res) {
                     expect(function(res){
@@ -110,19 +110,29 @@ describe('Check API routes', function() {
         });
 
         it('(DELETE /token)', function(done) {
-            request.delete('/auth/?token=' + token)
+            request.delete('/auth/?token=' + global.temptoken)
                 .expect(204)
                 .end(function (err, res) {
                     done(err);
                 });
         }); 
-    });*/
+    });
 
     //delete user
-    describe(' - Delete user', function() {
+    describe(' - Delete user', function () {
+        before(function (done) {
+            var task = global.object[1];
+            request.post('/auth')
+                .send(task)
+                .end(function (err, res) {
+                    global.token = res.body.token;
+                    done();
+                });
+        });
+
         it('(DELETE /user)', function(done) {
-            var task = global.object[0];
-            request.delete('/user/?email=' + task.email)
+            const task = { "email": "asd@asd.nasd", "pass": "@ASDA3gah45", "token": global.token };
+            request.delete('/user/?email=' + task.email +'&token=' + task.token)
                 .expect(204)
                 .end(function (err, res) {
                     done(err);
