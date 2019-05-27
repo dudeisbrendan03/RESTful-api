@@ -51,7 +51,7 @@ const http = require('http'),
 
 
 try {
-    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.233\n`);
+    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.237\n`);
 } catch (e) {
     console.error('Unknown version');
 }
@@ -107,11 +107,15 @@ let httpsServer;
 
 // HTTPS Server
 try {
-    httpsServer = https.createServer({
-        key: fs.readFileSync(config.keyloc).toString('utf8'),
-        secureOptions: require('constants').SSL_OP_NO_TLSv1,//TLS 1.0 disabled.
-        cert: fs.readFileSync(config.certloc).toString('utf8')
-    }, (req, res) => config.secured ? logic(req, res) : undefined);
+    if (config.cabundleloc !== '') {
+        const httpsOpts = {key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+            cert: fs.readFileSync(config.certloc).toString('utf8'), ca: fs.readFileSync(config.cabundleloc).toString('utf8')};
+    } else {
+        const httpsOpts = {key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+            cert: fs.readFileSync(config.certloc).toString('utf8')};
+    }
+
+    httpsServer = https.createServer(httpsOpts, (req, res) => config.secured ? logic(req, res) : undefined);
 } catch (e) {
     log.error('HTTPS is unavailable as the certificate files are unavailable, damaged or missing.');
 }
