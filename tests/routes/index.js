@@ -15,7 +15,7 @@ global.object = [{
         }, {
             "email":"asd@asd.nasd",
         "pass": "@ASDA3gah45",
-        }];
+    }, { "email": "", "token": "", expires;0}];
 
 describe('Check API routes', function() {  
     //ping test
@@ -91,7 +91,7 @@ describe('Check API routes', function() {
             request.post('/auth')
                 .send(task)
                 .end(function(err, res) {
-                    global.temptoken = res.body.token;
+                    global.object[3] = JSON.parse(res.body);
                     done();
                 });
         });
