@@ -1,6 +1,4 @@
-*Currently pretty inefficient/insecure*
-
-v0.2.239
+> v0.3.DEV
 
 [Get the docs](https://restfulapi13.docs.apiary.io/#)
 
@@ -35,12 +33,7 @@ To clear expired tokens while the server is running run:
 ## Dependancies
 None(ish)!
 
-I have no imports, no need for a package.json or any dependacy management. But this *DOES* require Node 8.*.
-
-## To-do
-- Logging
-- Change how the console displays requests and content
-- Actually build the authentication part of the API, at the minute it may only deliver content (poorly) and make some simple RESTful requests. I haven't actually put mutch into the API yet.
+We have no imports, no need for a package.json or any dependacy management. But this *DOES* require Node 8.*.
 
 ### Credits
-[Credits file](https://github.com/dudeisbrendan/RESTful-api/blob/master/.github/CREDIT.md)
+[Credits file](https://github.com/dudeisbrendan/RESTful-api/blob/master/.github/CREDITS.md)
