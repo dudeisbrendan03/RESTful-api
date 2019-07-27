@@ -106,30 +106,32 @@ const httpServer = http.createServer((req, res) => {
 let httpsServer;
 
 // HTTPS Server
-try {
-    if (config.cabundleloc !== '') {
-        try {
-            var httpsOpts = {
-                key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
-                cert: fs.readFileSync(config.certloc).toString('utf8'), ca: fs.readFileSync(config.cabundleloc).toString('utf8')
-            };
-        } catch (e) {
-            log.error('HTTPS Error: Issue loading key, cert and CA');
+if (config.secured) {
+    try {
+        if (config.cabundleloc !== '') {
+            try {
+                var httpsOpts = {
+                    key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+                    cert: fs.readFileSync(config.certloc).toString('utf8'), ca: fs.readFileSync(config.cabundleloc).toString('utf8')
+                };
+            } catch (e) {
+                log.error('HTTPS Error: Issue loading key, cert and CA');
+            }
+        } else {
+            try {
+                var httpsOpts = {
+                    key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+                    cert: fs.readFileSync(config.certloc).toString('utf8')
+                };
+            } catch (e) {
+                log.error('HTTPS Error: Issue loading key and cert.');
+            }
         }
-    } else {
-        try {
-            var httpsOpts = {
-                key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
-                cert: fs.readFileSync(config.certloc).toString('utf8')
-            };
-        } catch (e) {
-            log.error('HTTPS Error: Issue loading key and cert.');
-        }
-    }
 
-    httpsServer = https.createServer(httpsOpts, (req, res) => config.secured ? logic(req, res) : undefined);
-} catch (e) {
-    log.error('HTTPS is unavailable as the certificate files are unavailable, damaged or missing.');
+        httpsServer = https.createServer(httpsOpts, (req, res) => config.secured ? logic(req, res) : undefined);
+    } catch (e) {
+        log.error('HTTPS is unavailable as the certificate files are unavailable, damaged or missing.');
+    }
 }
 
 // Start the HTTP server
