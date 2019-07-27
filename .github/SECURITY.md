@@ -7,6 +7,7 @@ Versions of our project that will be supported with security updates.
 | Version | Supported          | Support ends |
 | ------- | ------------------ | ------------ |
 | 0.2.x   | :white_check_mark: | 31/06/2019   |
+| 0.2.243 | :white_check_mark: | 31/08/2019   |
 | 0.2.239 | :white_check_mark: | 31/07/2019   |
 | 0.1.x   | :x:                |              |
 | 0.1.176 | :white_check_mark: | 31/05/2019   |

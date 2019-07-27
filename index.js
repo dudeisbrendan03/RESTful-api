@@ -51,7 +51,7 @@ const http = require('http'),
 
 
 try {
-    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.DEV\n`);
+    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.243\n`);
 } catch (e) {
     console.error('Unknown version');
 }
