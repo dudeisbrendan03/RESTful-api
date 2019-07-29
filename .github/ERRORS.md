@@ -67,4 +67,5 @@ Will return: 500
 If the server returns 500 with no error code it means something has gone wrong, the server is not able to continue nor does it know what happened.
 
 Will return: 500
+
 *If you come accross this issue please report it and detailed instructions on how to reproduce*
