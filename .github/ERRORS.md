@@ -31,6 +31,30 @@ The user in the query does not exist because an error occured and no user data w
 
 Will return: 404
 
+### NOT-AUTHENTICATED
+You need to be authenticated to use the function
+
+
+Will return: 403
+
+### NOT-AUTHENTICATED2
+There was an attempt to login but it failed.
+
+
+Will return: 403
+
+### NOT-ALLOWED
+The method you attempted to use is not allowed on the function you chose. This will return the functions that you are available.
+
+
+Will return: 405
+
+### AUTH-EXPIREDTOKEN
+The token you provided was expired. You can no longer renew this token, you can either remove it or let it automatically be removed.
+
+
+Will return: 422
+
 ### HASH-FAIL
 Something went wrong while hashing and the server cannot continue.
 
