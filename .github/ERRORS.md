@@ -25,11 +25,7 @@ The token you provided isn't valid, is expired or just isn't a token.
 
 Will return: 401
 
-## USER-NOEXIST
-The user in the query does not exist because an error occured and no user data was provided when searching for it.
 
-
-Will return: 404
 
 ## NOT-AUTHENTICATED
 You need to be authenticated to use the function
@@ -42,6 +38,12 @@ There was an attempt to login but it failed.
 
 
 Will return: 403
+
+## USER-NOEXIST
+The user in the query does not exist because an error occured and no user data was provided when searching for it.
+
+
+Will return: 404
 
 ## NOT-ALLOWED
 The method you attempted to use is not allowed on the function you chose. This will return the functions that you are available.
