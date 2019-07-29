@@ -30,6 +30,9 @@ If there is no environment defined when starting the application then it default
 To clear expired tokens while the server is running run:
 `NODE_ENV=tokClear node .`
 
+### Errors
+Learn about error and their meaning [here](https://github.com/dudeisbrendan/RESTful-api/blob/master/.github/ERRORS.md)
+
 ## Dependancies
 None(ish)!
 
