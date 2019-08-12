@@ -76,3 +76,4 @@ bin/Microsoft.NodejsTools.WebRole.dll
 obj/
 
 .scannerwork/
+.code-workspace*
