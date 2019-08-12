@@ -220,6 +220,7 @@ const logic = (req, res) => {
         ].join('\n'));
 
         // Now send the req to the handler specified in the router
+        try {
         handlerReq(data, function (statCode, payload, objTyp) {
             // Use the status code from the handler, or just use 200 (OK)
             statCode = typeof statCode === 'number' ? statCode : 200;
@@ -253,6 +254,11 @@ const logic = (req, res) => {
                 `  Time: ${rdate}`
             ].join('\n'));
         });
+        } catch (e) {
+            res.setHeader('status', 'fail');
+            res.writeHead(500);
+            res.end('{ status: 500, error: "", description: "Server has hit a major event. This failure should be reported." }');
+        }
 
         // Now the request has finished we want to go back to what we were doing before
 
