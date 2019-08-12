@@ -57,6 +57,17 @@ The token you provided was expired. You can no longer renew this token, you can 
 
 Will return: 422
 
+## FATAL
+If you recieve this error ***DO NOT*** open an issue until instructed by staff. This error could be levereged to create exploits that could be levereged to crash servers, damage networks or even steal data.
+
+
+Please contact us in the same format you would create an issue [here (hey@thatspretty.cool)](mailto:hey@thatspretty.cool)
+
+
+Will return: 500
+
+*If you come accross this issue please report it and detailed instructions on how to reproduce*
+
 ## HASH-FAIL
 Something went wrong while hashing and the server cannot continue.
 
