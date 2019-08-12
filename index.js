@@ -47,11 +47,12 @@ const http = require('http'),
     fs = require('fs'),
     handlers = require('./lib/handlers'),
     etc = require('./lib/etclib'),
-    _data = require('./lib/dataHandler');
+    _data = require('./lib/dataHandler'),
+    shipping = require('./shipping');
 
 
 try {
-    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.3.DEV\n`);
+    console.info(`\n${shipping.project.name}-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\n${shipping.project.url}\n ${shipping.version.version}\n`);
 } catch (e) {
     console.error('Unknown version');
 }
