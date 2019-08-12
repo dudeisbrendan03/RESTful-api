@@ -255,9 +255,28 @@ const logic = (req, res) => {
             ].join('\n'));
         });
         } catch (e) {
-            res.setHeader('status', 'fail');
+            log.error(e); //Log fatal error to console
+            /*The below is used to store the fatal error to a file to be reviewed later
+                1st - Store the original console.log function and bring in util, fs, define the logfile and where we will now write (to the file)
+                2nd - Redefine console.log to store to said file and then write to console still
+                3rd - Log the errpr
+                4th - Restore the original console.log function to prevent further logging
+                5th - Respond to the user will a FATAL error
+            */
+            const store = console.log,//1
+                fs = require('fs'),
+                util = require('util'),
+                log_file = fs.createWriteStream(__dirname + '/fatal'+date+'.log', {flags : 'w'}),
+                log_stdout = process.stdout;
+            console.log = function(d) { //2
+                log_file.write(util.format(d) + '\n');
+                log_stdout.write(util.format(d) + '\n');
+            };
+            console.log(e);//3
+            console.log = store;//4
+            res.setHeader('status', 'fail');//5
             res.writeHead(500);
-            res.end('{ status: 500, error: "", description: "Server has hit a major event. This failure should be reported." }');
+            res.end('{ status: 500, error: "FATAL", description: "Server has hit a major event. This failure should be reported." }');
         }
 
         // Now the request has finished we want to go back to what we were doing before
@@ -275,6 +294,7 @@ var router = {
     "ping": handlers.ping,
     "user": handlers.user,
     "auth": handlers.accesstoken,
+    "instance/info": handlers.instance,
     "favicon.ico": handlers.favicon
 };
 
