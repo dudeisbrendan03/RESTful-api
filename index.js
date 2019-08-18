@@ -294,7 +294,7 @@ var router = {
     "ping": handlers.ping,
     "user": handlers.user,
     "auth": handlers.accesstoken,
-    "instance/info": handlers.instance.info,
+    "instance/info": handlers.instance,
     "favicon.ico": handlers.favicon
 };
 
