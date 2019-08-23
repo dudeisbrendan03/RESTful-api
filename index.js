@@ -275,6 +275,7 @@ const logic = (req, res) => {
             console.log(e);//3
             console.log = store;//4
             res.setHeader('status', 'fail');//5
+            res.setHeader('Content-Type', 'application/JSON')
             res.writeHead(500);
             res.end('{ status: 500, error: "FATAL", description: "Server has hit a major event. This failure should be reported." }');
         }
@@ -295,6 +296,7 @@ var router = {
     "user": handlers.user,
     "auth": handlers.accesstoken,
     "instance/info": handlers.instance.info,
+    "instance": handlers.instance,
     "favicon.ico": handlers.favicon
 };
 
