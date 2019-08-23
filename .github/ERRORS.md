@@ -39,6 +39,12 @@ There was an attempt to login but it failed.
 
 Will return: 403
 
+## NOT-AUTHENTICATED3
+There was an attempt to login but it failed because the user didn't have an operator flag.
+
+
+Will return: 403
+
 ## USER-NOEXIST
 The user in the query does not exist because an error occured and no user data was provided when searching for it.
 
@@ -53,6 +59,12 @@ Will return: 405
 
 ## AUTH-EXPIREDTOKEN
 The token you provided was expired. You can no longer renew this token, you can either remove it or let it automatically be removed.
+
+
+Will return: 422
+
+##AUTH-OPRENEW
+The token you provided belong to an operator. You can not renew this token, you can either remove it or let it automatically be removed.
 
 
 Will return: 422
