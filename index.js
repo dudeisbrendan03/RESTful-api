@@ -47,11 +47,12 @@ const http = require('http'),
     fs = require('fs'),
     handlers = require('./lib/handlers'),
     etc = require('./lib/etclib'),
-    _data = require('./lib/dataHandler');
+    _data = require('./lib/dataHandler'),
+    shipping = require('./shipping');
 
 
 try {
-    console.info(`\NJSAPIPROJ-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\nhttps://github.com/dudeisbrendan03/RESTful-api\n v0.2.249\n`);
+    console.info(`\n${shipping.project.name}-${fs.readFileSync('.git/refs/heads/master').toString('utf-8')}\nUsing mode: ${config.env}\n${shipping.project.url}\n ${shipping.version.version}\n`);
 } catch (e) {
     console.error('Unknown version');
 }
@@ -106,30 +107,32 @@ const httpServer = http.createServer((req, res) => {
 let httpsServer;
 
 // HTTPS Server
-try {
-    if (config.cabundleloc !== '') {
-        try {
-            var httpsOpts = {
-                key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
-                cert: fs.readFileSync(config.certloc).toString('utf8'), ca: fs.readFileSync(config.cabundleloc).toString('utf8')
-            };
-        } catch (e) {
-            log.error('HTTPS Error: Issue loading key, cert and CA');
+if (config.secured) {
+    try {
+        if (config.cabundleloc !== '') {
+            try {
+                var httpsOpts = {
+                    key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+                    cert: fs.readFileSync(config.certloc).toString('utf8'), ca: fs.readFileSync(config.cabundleloc).toString('utf8')
+                };
+            } catch (e) {
+                log.error('HTTPS Error: Issue loading key, cert and CA');
+            }
+        } else {
+            try {
+                var httpsOpts = {
+                    key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
+                    cert: fs.readFileSync(config.certloc).toString('utf8')
+                };
+            } catch (e) {
+                log.error('HTTPS Error: Issue loading key and cert.');
+            }
         }
-    } else {
-        try {
-            var httpsOpts = {
-                key: fs.readFileSync(config.keyloc).toString('utf8'), secureOptions: require('constants').SSL_OP_NO_TLSv1,
-                cert: fs.readFileSync(config.certloc).toString('utf8')
-            };
-        } catch (e) {
-            log.error('HTTPS Error: Issue loading key and cert.');
-        }
-    }
 
-    httpsServer = https.createServer(httpsOpts, (req, res) => config.secured ? logic(req, res) : undefined);
-} catch (e) {
-    log.error('HTTPS is unavailable as the certificate files are unavailable, damaged or missing.');
+        httpsServer = https.createServer(httpsOpts, (req, res) => config.secured ? logic(req, res) : undefined);
+    } catch (e) {
+        log.error('HTTPS is unavailable as the certificate files are unavailable, damaged or missing.');
+    }
 }
 
 // Start the HTTP server
@@ -217,6 +220,7 @@ const logic = (req, res) => {
         ].join('\n'));
 
         // Now send the req to the handler specified in the router
+        try {
         handlerReq(data, function (statCode, payload, objTyp) {
             // Use the status code from the handler, or just use 200 (OK)
             statCode = typeof statCode === 'number' ? statCode : 200;
@@ -250,6 +254,31 @@ const logic = (req, res) => {
                 `  Time: ${rdate}`
             ].join('\n'));
         });
+        } catch (e) {
+            log.error(e); //Log fatal error to console
+            /*The below is used to store the fatal error to a file to be reviewed later
+                1st - Store the original console.log function and bring in util, fs, define the logfile and where we will now write (to the file)
+                2nd - Redefine console.log to store to said file and then write to console still
+                3rd - Log the errpr
+                4th - Restore the original console.log function to prevent further logging
+                5th - Respond to the user will a FATAL error
+            */
+            const store = console.log,//1
+                fs = require('fs'),
+                util = require('util'),
+                log_file = fs.createWriteStream(__dirname + '/fatal'+date+'.log', {flags : 'w'}),
+                log_stdout = process.stdout;
+            console.log = function(d) { //2
+                log_file.write(util.format(d) + '\n');
+                log_stdout.write(util.format(d) + '\n');
+            };
+            console.log(e);//3
+            console.log = store;//4
+            res.setHeader('status', 'fail');//5
+            res.setHeader('Content-Type', 'application/JSON')
+            res.writeHead(500);
+            res.end('{ status: 500, error: "FATAL", description: "Server has hit a major event. This failure should be reported." }');
+        }
 
         // Now the request has finished we want to go back to what we were doing before
 
@@ -266,6 +295,8 @@ var router = {
     "ping": handlers.ping,
     "user": handlers.user,
     "auth": handlers.accesstoken,
+    "instance/info": handlers.instance.info,
+    "instance": handlers.instance,
     "favicon.ico": handlers.favicon
 };
 
