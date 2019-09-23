@@ -4,15 +4,24 @@
 
 Versions of our project that will be supported with security updates.
 
-| Version | Supported          | Support ends |
-| ------- | ------------------ | ------------ |
-| 0.3.x   | :warning:          | TBA          |
-| 0.2.x   | :warning:          | 31/06/2019   |
-| 0.2.249 | :white_check_mark: | 31/08/2019   |
-| 0.2.239 | :white_check_mark: | 31/07/2019   |
-| 0.1.x   | :x:                |              |
-| 0.1.176 | :warning:          | 31/05/2019   |
-| < 0.1   | :x:                |              |
+
+Version: Release of the software
+
+Supported: If the software is currently supported, has finished it's term or is not supported.
+
+Support ends: The date the support ends
+
+LTS: Long term support (Warning symbol indicates that a version in that group has LTS, tick indicates LTS)
+| Version | Supported          | Support ends | LTS |
+| ------- | ------------------ | ------------ | --- |
+| 0.3.x   | :white_check_mark: | 31/12/2019   | :warning: |
+| 0.3.308 | :white_check_mark: | 31/02/2020   | :white_check_mark: |
+| 0.2.x   | :warning:          | 31/06/2019   | :x: |
+| 0.2.249 | :warning:          | 31/08/2019   | :x: |
+| 0.2.239 | :warning:          | 31/07/2019   | :x: |
+| 0.1.x   | :x:                |              | :x: |
+| 0.1.176 | :warning:          | 31/05/2019   | :x: |
+| < 0.1   | :x:                |              | :x: |
 
 ## Reporting a Vulnerability
 

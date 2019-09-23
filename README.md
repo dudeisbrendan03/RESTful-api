@@ -1,4 +1,4 @@
-> v0.3.305
+> v0.3.308
 
 [Get the docs](https://restfulapi13.docs.apiary.io/#)
 
