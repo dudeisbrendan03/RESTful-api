@@ -1,4 +1,5 @@
 > v0.3.308
+> This branch is for security and LTS updates for 0.3.308
 
 [Get the docs](https://restfulapi13.docs.apiary.io/#)
 
