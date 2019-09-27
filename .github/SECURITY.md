@@ -12,6 +12,7 @@ Supported: If the software is currently supported, has finished it's term or is 
 Support ends: The date the support ends
 
 LTS: Long term support (Warning symbol indicates that a version in that group has LTS, tick indicates LTS)
+
 | Version | Supported          | Support ends | LTS                |
 | ------- | ------------------ | ------------ | ------------------ |
 | 0.3.x   | :white_check_mark: | 31/12/2019   | :warning:          |
