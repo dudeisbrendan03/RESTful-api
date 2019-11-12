@@ -1,7 +1,7 @@
-var supertest = require('supertest');  
-var chai = require('chai');  
-var uuid = require('uuid');  
-var app = require('../index.js');
+const supertest = require('supertest'), 
+ chai = require('chai'), 
+ uuid = require('uuid'),
+ app = require('../index.js');
 
 global.app = app;  
 global.uuid = uuid;  

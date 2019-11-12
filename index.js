@@ -287,7 +287,7 @@ const logic = (req, res) => {
 
 
 //A cool router
-var router = {
+const router = {
     "up": handlers.up,
     "sample": handlers.sample,
     "best": handlers.best,
