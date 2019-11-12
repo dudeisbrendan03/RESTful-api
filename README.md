@@ -34,7 +34,7 @@ To clear expired tokens while the server is running run:
 ### Errors
 Learn about error and their meaning [here](https://github.com/dudeisbrendan/RESTful-api/blob/master/.github/ERRORS.md)
 
-## Dependancies
+## Dependencies
 None(ish)!
 
 We have no imports, no need for a package.json or any dependacy management. But this *DOES* require Node 8.*.
