@@ -63,27 +63,20 @@ else if (config.ip === '127.0.0.1')
 
 if (config.clearTokens) {
     log.warn("Going to remove expired tokens");
-    var tkList = [];
     etc.tokens(function (tkList) {
         if (tkList) {
             tkList.forEach(function (tk) {
                 etc.isValid(tk, function (tmp) {
                     if (!tmp) {
                         _data.delete('actk', tk, function (err) {
-                            if (!err) {
-                                log.info(tk + " removed");
-                            } else {
-                                log.warn(tk + " could not be properly invalidated/unlinked");
-                            }
+                            if (!err) log.info(tk + " removed");
+                            else log.warn(tk + " could not be properly invalidated/unlinked");
                         });
                     }
                 });
             });
-        } else {
-            log.warn("Couldn't attempt token removal");
-        }
-    });
-    
+        } else log.warn("Couldn't attempt token removal");
+    });   
 }
 
 // Check if HTTP and HTTPS are disabled
