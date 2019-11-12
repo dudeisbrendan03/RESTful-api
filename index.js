@@ -171,8 +171,8 @@ const logic = (req, res) => {
     const reqUrl = url.parse(req.url, true);//Get the URL the user used and parse it.
 
     // Get the path
-    const path = reqUrl.pathname;//The path the user requested: untrimmed
-    const trimPath = path.replace(/^\/+|\/+$/g, '');
+    const path = reqUrl.pathname,//The path the user requested: untrimmed
+        trimPath = path.replace(/^\/+|\/+$/g, '');
 
     /* Educate ourselves about the request
 
@@ -182,9 +182,9 @@ const logic = (req, res) => {
     - The headers
 
     */
-    const queryStringObj = reqUrl.query; // Get the query as an object
-    const method = req.method.toLowerCase(); // Figure out method (POST, GET, DELETE, PUT, HEAD)
-    const headers = req.headers; // Get the headers as an object
+    const queryStringObj = reqUrl.query, // Get the query as an object
+        method = req.method.toLowerCase(), // Figure out method (POST, GET, DELETE, PUT, HEAD)
+        headers = req.headers; // Get the headers as an object
 
     // Get payload/content/body of the request (if applicable)
     const decoder = new StringDecoder('utf-8');// To decode stream - we only expect to receive utf-8
