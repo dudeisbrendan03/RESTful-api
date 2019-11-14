@@ -32,7 +32,7 @@ To clear expired tokens while the server is running run:
 `NODE_ENV=tokClear node .`
 
 ### Errors
-Learn about error and their meaning [here](https://github.com/dudeisbrendan/RESTful-api/blob/master/.github/ERRORS.md)
+Learn about errors and their meanings [here](https://github.com/dudeisbrendan03/RESTful-api/blob/master/.github/ERRORS.md)
 
 ## Dependencies
 None(ish)!
@@ -40,4 +40,4 @@ None(ish)!
 We have no imports, no need for a package.json or any dependacy management. But this *DOES* require Node 8.*.
 
 ### Credits
-[Credits file](https://github.com/dudeisbrendan/RESTful-api/blob/master/.github/CREDITS.md)
+[Credits file](https://github.com/dudeisbrendan03/RESTful-api/blob/master/.github/CREDITS.md)
